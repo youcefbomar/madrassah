@@ -1,0 +1,120 @@
+QWidget{
+    background-color: #ffffff;
+    font-family: 'Rubik';
+}
+
+#sidebar {
+    background-color: #2c3e50;
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2c3e50, stop: 1 #0c151f); /* Bottom color */
+    border: none;
+    border-right: 1px solid #34495e;
+    border-radius: 20px;
+}
+
+.nav_btn, QPushButton[class="nav_btn"] {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 15px;
+    padding: 25px;
+}
+
+.nav_btn:hover{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #34495e, stop: 1 #243445); /* Bottom color */
+}
+
+QPushButton.nav_btn[active="true"] {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #34495e, stop: 1 #243445);
+    border-left: 4px solid qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #45ffa2, stop: 1 #1abc9c);
+    font-weight: bold;
+}
+
+#nav_btn_0{
+    border-top-left-radius: 20px;  /* Rounded top-left corner */
+    border-top-right-radius: 20px; 
+}
+
+#nav_btn_0:hover{
+    border-top-left-radius: 20px;  /* Rounded top-left corner */
+    border-top-right-radius: 20px; 
+}
+
+
+
+#main_content {
+    background-color: #363636;
+    border-radius: 20px;
+}
+
+#cards_frame{
+    background-color: #363636;
+    border-radius: 20px;
+}
+
+.card {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0.2 #2c3e50, stop: 1 #0c151f);
+    border-radius: 20px;
+}
+
+#card_content{
+    background: none;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 26px;
+}
+
+#card_title{
+    background: none;
+    color: #ffffff;
+    margin-left: 0px;
+    font-weight: 650;
+    font-size: 24px;
+}
+
+#card_title2{
+    background: none;
+    color: #181818;
+    margin-left: 0px;
+    font-weight: 650;
+    font-size: 30px;
+    padding-right: 50px;
+    padding-bottom: 20px;
+}
+
+#card_title3{
+    background: none;
+    color: #ffffff;
+    font-weight: 650;
+    font-size: 26px;
+    padding-left: 20px;
+}
+
+#card_content3{
+    background: none;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 20px;
+    padding-left: 20px;
+}
+
+
+QScrollBar:vertical {
+    background: #cacaca;
+    width: 12px;
+    margin: 0px 0px 0px 0px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical {
+    background: #5d0e41;
+    min-height: 20px;
+    border-radius: 6px;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}
