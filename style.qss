@@ -1,5 +1,5 @@
 QWidget{
-    background-color: #ffffff;
+    background-color: #f3f3f3;
     font-family: 'Rubik';
 }
 
@@ -78,11 +78,10 @@ QPushButton.nav_btn[active="true"] {
 #card_title2{
     background: none;
     color: #181818;
-    margin-left: 0px;
     font-weight: 650;
     font-size: 30px;
     padding-right: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 #card_title3{
@@ -97,24 +96,75 @@ QPushButton.nav_btn[active="true"] {
     background: none;
     color: #ffffff;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 16px;
     padding-left: 20px;
 }
 
 
 QScrollBar:vertical {
-    background: #cacaca;
+    background: #dddddd;
     width: 12px;
     margin: 0px 0px 0px 0px;
     border-radius: 6px;
 }
 
 QScrollBar::handle:vertical {
-    background: #5d0e41;
-    min-height: 20px;
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #45ffa2, stop: 1 #1abc9c);
+    min-height: 16px;
     border-radius: 6px;
 }
 
 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
     height: 0px;
+}
+
+#red_scroll_area{
+    border: none;
+}
+
+#payment_text{
+    background: none;
+}
+
+#payment_button{
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0.2 #4CCD99, stop: 1 #007F73);
+    color: white;
+    border: none;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 10px;
+    font-weight: 650;
+    font-size: 22px;
+}
+
+#payment_button:hover {
+        background-color: #007F73;
+}
+
+
+QLineEdit {
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    font-weight: bold; 
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    color: #181818;
+}
+
+QLineEdit:focus {
+    border: 1px solid qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0.2 #4CCD99, stop: 1 #007F73);
+    background-color: #ffffff;
+}
+
+
+#search_button{
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 650;
+}
+
+#search_button:hover{
+    background-color: #e7e7e7;
+    border: 1px solid qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0.2 #4CCD99, stop: 1 #007F73);
 }

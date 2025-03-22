@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
                               QHBoxLayout, QPushButton, QLabel, QFrame, QSpacerItem,
-                              QSizePolicy, QStackedWidget, QScrollArea)
+                              QSizePolicy, QStackedWidget, QScrollArea, QLineEdit)
 from PySide6.QtCore import Qt,QSize
 from PySide6.QtGui import QIcon, QCursor
 import sys
@@ -18,14 +18,18 @@ class MainPage(QWidget):
             btn.setChecked(i == index)
             btn.style().unpolish(btn)
             btn.style().polish(btn)
+
+            self.stacked_widget.setCurrentIndex(index)
+
             if i == index:
                 btn.setCursor(QCursor(Qt.ArrowCursor))  
             else :
                 btn.setCursor(QCursor(Qt.PointingHandCursor))
 
-    def card_maker(self,title,content) :
+
+    def card_maker(self, title, content) :
         card = QWidget()
-        card.setMinimumSize(300,120)
+        card.setMinimumSize(300,100)
         card.setProperty("class","card")
         
         layout = QVBoxLayout(card)
@@ -50,36 +54,77 @@ class MainPage(QWidget):
 
         return card
 
-    def payment_card_maker(self,title,content):
+    def payment_card_maker(self, title, content, button_name):
         card = QWidget()
-        card.setMinimumSize(300,120)
+        card.setMinimumSize(300,80)
+        card.setMaximumHeight(80)
         card.setProperty("class","card")
 
-        layout = QVBoxLayout(card)
+        layout = QHBoxLayout(card)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
-        layout.setAlignment(Qt.AlignLeft)
 
-        # Create title label
         title_label = QLabel(title)
         title_label.setObjectName('card_title3')
-        title_label.setAlignment(Qt.AlignLeft)
         
-        # Create content label
         content_label = QLabel(content)
         content_label.setObjectName('card_content3')
-        content_label.setAlignment(Qt.AlignLeft)
+
+
         title_label.setFixedHeight(30)
         content_label.setFixedHeight(30)
+
+        text = QWidget()
+        text.setObjectName('payment_text')
+
+        text_layout = QVBoxLayout(text)
+
+        text_layout.addWidget(title_label)
+        text_layout.addWidget(content_label)
         
-        # Add widgets to layout
-        layout.addWidget(title_label)
-        layout.addWidget(content_label)
+
+        button = QPushButton(button_name)
+        button.setObjectName('payment_button')
+        button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        button.setCursor(QCursor(Qt.PointingHandCursor)) 
+
+        
+        layout.addWidget(text,3)
+        layout.addWidget(button,1)
 
         return card
          
+    def search_bar_maker(self, title, content):
 
-    def dasboard_page(self):
+        search_bar = QWidget()
+        search_bar.setMinimumSize(300,80)
+        search_bar.setMaximumHeight(80)
+        search_bar.setProperty("class","card")
+        
+        layout = QHBoxLayout(search_bar)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+        
+        # Create title label
+        bar = QLineEdit()
+        bar.setPlaceholderText("بحث ....")
+        bar.setMaximumSize(500,40)
+
+        layout.addWidget(bar)
+
+
+        button = QPushButton('بحث')
+        button.setObjectName('search_button')
+        button.setMaximumSize(200,40)
+        button.setCursor(QCursor(Qt.PointingHandCursor))
+
+        layout.addWidget(button)
+
+        return search_bar
+
+
+    
+    def students_page(self):
 
         container = QWidget()
         page_layout= QVBoxLayout(container) 
@@ -91,9 +136,47 @@ class MainPage(QWidget):
         page_layout.addLayout(cards_layout)
 
         #--------- cards ----------------------------------
-        card1 = self.card_maker('Teachers  :','190')
-        card2 = self.card_maker('Students  :','3000')
-        card3 = self.card_maker('Classes  :','300')
+        search_bar = self.search_bar_maker('المعلمين  :','190')
+        
+        cards_layout.addWidget(search_bar)
+        #--------------------------------------------------
+
+        frames_layout = QHBoxLayout()
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setObjectName('red_scroll_area')
+
+        scroll_area2 = QScrollArea()
+        scroll_area2.setWidgetResizable(True)
+        scroll_area2.setObjectName('red_scroll_area')
+
+
+
+        
+
+        page_layout.addLayout(frames_layout)
+        page_layout.setAlignment(Qt.AlignTop)
+
+
+        return container
+
+
+
+    def dasboard_page(self):
+
+        container = QWidget()
+        page_layout= QVBoxLayout(container) 
+
+        cards_layout = QHBoxLayout()
+        cards_layout.setContentsMargins(10, 10, 10, 10)
+        cards_layout.setSpacing(15)
+
+        page_layout.addLayout(cards_layout)
+
+        #--------- cards ----------------------------------
+        card1 = self.card_maker('المعلمين  :','190')
+        card2 = self.card_maker('التلاميذ  :','3000')
+        card3 = self.card_maker('الحصص  :','300')
         
         cards_layout.addWidget(card1)
         cards_layout.addWidget(card2)
@@ -111,29 +194,39 @@ class MainPage(QWidget):
 
         scroll_content = QWidget()
         scroll_layout = QVBoxLayout(scroll_content)
+        scroll_layout.setAlignment(Qt.AlignTop)
 
         scroll_content2 = QWidget()
         scroll_layout2 = QVBoxLayout(scroll_content2)
+        scroll_layout2.setAlignment(Qt.AlignTop)
 
         # Add multiple labels to fill space
-        for i in range(50):
-            label = self.payment_card_maker(f'يوسف{i}',str(i*i+i*268*i+i*657*6*i))
-            label2 = self.card_maker(f'asda{i}','someshit')
+        for i in range(2):
+            label = self.payment_card_maker(f'يوسف','رياضيات و فيزياء','دفع')
+            label2 = self.payment_card_maker(f'رياضيات','استاذ بوسعيد','الحضور')
             scroll_layout.addWidget(label)
-            print(f'nerd{i}')
             scroll_layout2.addWidget(label2)
 
 
         scroll_area.setWidget(scroll_content)
         scroll_area2.setWidget(scroll_content2)
 
-        frames_layout.addWidget(scroll_area)
         frames_layout.addWidget(scroll_area2)
-        frames_layout.setSpacing(30)
+        frames_layout.addWidget(scroll_area)
+        frames_layout.setSpacing(80)
 
-        text=QLabel('يدفعون اليوم    :')
+        text= QLabel('يدفعون اليوم    :')
+        text2= QLabel('حصص اليوم    :')
+        
         text.setObjectName('card_title2')
-        page_layout.addWidget(text)
+        text2.setObjectName('card_title2')
+
+        all_text= QHBoxLayout()
+        all_text.addWidget(text2)
+        all_text.addWidget(text)
+        page_layout.addLayout(all_text)
+        
+
         page_layout.addLayout(frames_layout)
 
 
@@ -161,13 +254,13 @@ class MainPage(QWidget):
 
         #---------------------------Buttons---------------------------
         sidebar_items = [
-            ("Dashboard", "icons/home-white.png"),
-            ("Students", "icons/user-white.png"),
-            ("Teachers", "icons/graduation-cap-white.png"),
-            ("Classes", "icons/coins-white.png"),
-            ("Payments", "icons/coins-white.png"),
-            ("Incomes", "icons/coins-white.png"),
-            ("Settings", "icons/gear-white.png")
+            ("الرئيسية", "icons/home-white.png"),
+            ("التلاميذ", "icons/user-white.png"),
+            ("المعلمين", "icons/graduation-cap-white.png"),
+            ("الحصص", "icons/lesson-white.png"),
+            ("المدفوعات", "icons/money-white.png"),
+            ("المالية", "icons/file-dollar-white.png"),
+            ("الإعدادات", "icons/gear-white.png")
         ]
         
         self.nav_buttons = []
@@ -197,25 +290,17 @@ class MainPage(QWidget):
         
         main_content = QVBoxLayout()
         main_content.setObjectName("main_content")
-        frame = QFrame()
-        frame_layout = QVBoxLayout(frame)
-        
-        something = QHBoxLayout()
-        something.addWidget(self.dasboard_page())
 
-        frame_layout.addLayout(something)
-        main_content.addWidget(frame)
+        self.stacked_widget = QStackedWidget()
+        self.stacked_widget.addWidget(self.dasboard_page())   
+        self.stacked_widget.addWidget(self.students_page())  
+      
+        main_content.addWidget(self.stacked_widget)
         main_content.setAlignment(Qt.AlignTop)
-        
-
-
-
 
         dashbord_layout.addWidget(sidebar, 0.5) 
         dashbord_layout.addLayout(main_content, 4.5)  
-
-
-
+        #------------------------------------------------------------------------------------
         with open("style.qss", "r") as file:
             app.setStyleSheet(file.read())
         
