@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
-                              QHBoxLayout, QPushButton, QLabel, QFrame, QSpacerItem,
-                              QSizePolicy, QStackedWidget, QScrollArea, QLineEdit)
+                              QHBoxLayout, QPushButton, QLabel, QFrame,QSizePolicy,
+                              QStackedWidget, QScrollArea, QLineEdit, QTableWidget,
+                              QTableWidgetItem, QHeaderView)
 from PySide6.QtCore import Qt,QSize
 from PySide6.QtGui import QIcon, QCursor
 import sys
@@ -94,7 +95,7 @@ class MainPage(QWidget):
 
         return card
          
-    def search_bar_maker(self, title, content):
+    def search_bar_maker(self):
 
         search_bar = QWidget()
         search_bar.setMinimumSize(300,80)
@@ -112,49 +113,161 @@ class MainPage(QWidget):
 
         layout.addWidget(bar)
 
+        
 
-        button = QPushButton('بحث')
-        button.setObjectName('search_button')
-        button.setMaximumSize(200,40)
-        button.setCursor(QCursor(Qt.PointingHandCursor))
 
-        layout.addWidget(button)
+        search_button = QPushButton('بحث')
+        search_button.setObjectName('search_button')
+        search_button.setMaximumSize(200,40)
+        search_button.setCursor(QCursor(Qt.PointingHandCursor))
+
+        layout.addWidget(search_button)
+
+
+        add_button = QPushButton('أضف')
+        add_button.setObjectName('search_button')
+        add_button.setMaximumSize(200,40)
+        add_button.setCursor(QCursor(Qt.PointingHandCursor))
+
+        layout.addWidget(add_button)
 
         return search_bar
 
 
-    
+    def table_creator(self, labels, sortable):
+        
+        data = [
+            ["بوسعيد", 30, "USA",30],
+            ["آدم", 25, "Canada",30],
+            ["يوسف", 35, "UK",30],
+            ["يحيا", 28, "Australia",30],
+            ["مات", 22, "Germany",30],
+        ]
+        
+
+
+        table = QTableWidget(len(data), len(labels))
+        table.setHorizontalHeaderLabels(labels)
+        
+        
+
+        for row_idx, row_data in enumerate(data):
+            for col_idx, value in enumerate(row_data):
+                
+                item = QTableWidgetItem(str(value))
+                if col_idx == 1:
+                    item.setData(Qt.EditRole, int(value))
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row_idx, col_idx, item)
+                
+            item = QTableWidgetItem(f"ID: {row_idx+15}")
+            table.setVerticalHeaderItem(row_idx, item)
+
+
+        table.setSortingEnabled(sortable)
+
+
+        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+        return table
+
+
+    def payments_page(self):
+
+        container = QWidget()
+        page_layout= QVBoxLayout(container) 
+
+        cards_layout = QHBoxLayout()
+
+
+        page_layout.addLayout(cards_layout)
+
+        #--------- cards ----------------------------------
+        search_bar = self.search_bar_maker()
+        
+        cards_layout.addWidget(search_bar)
+        #--------------------------------------------------
+
+        table_labels = ['إسم التلميذ', 'إسم الأستاذ', 'الكمية', 'التاريخ', 'الحالة']
+        page_layout.addWidget(self.table_creator(table_labels, True))
+
+        page_layout.setAlignment(Qt.AlignTop)
+
+
+        return container
+
+
+    def courses_page(self):
+
+        container = QWidget()
+        page_layout= QVBoxLayout(container) 
+
+        cards_layout = QHBoxLayout()
+
+
+        page_layout.addLayout(cards_layout)
+
+        #--------- cards ----------------------------------
+        search_bar = self.search_bar_maker()
+        
+        cards_layout.addWidget(search_bar)
+        #--------------------------------------------------
+
+        table_labels = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00']
+        page_layout.addWidget(self.table_creator(table_labels, False))
+
+        page_layout.setAlignment(Qt.AlignTop)
+
+
+        return container
+
+
+
+    def teachers_page(self):
+
+        container = QWidget()
+        page_layout= QVBoxLayout(container) 
+
+        cards_layout = QHBoxLayout()
+
+
+        page_layout.addLayout(cards_layout)
+
+        #--------- cards ----------------------------------
+        search_bar = self.search_bar_maker()
+        
+        cards_layout.addWidget(search_bar)
+        #--------------------------------------------------
+
+        table_labels = ['الإسم', 'تاريخ الميلاد', 'المادة', 'رقم الهاتف', 'الاقامة']
+        page_layout.addWidget(self.table_creator(table_labels, True))
+
+        page_layout.setAlignment(Qt.AlignTop)
+
+
+        return container
+
+
+
     def students_page(self):
 
         container = QWidget()
         page_layout= QVBoxLayout(container) 
 
         cards_layout = QHBoxLayout()
-        cards_layout.setContentsMargins(10, 10, 10, 30)
-        cards_layout.setSpacing(15)
+
 
         page_layout.addLayout(cards_layout)
 
         #--------- cards ----------------------------------
-        search_bar = self.search_bar_maker('المعلمين  :','190')
+        search_bar = self.search_bar_maker()
         
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
 
-        frames_layout = QHBoxLayout()
-        scroll_area = QScrollArea()
-        scroll_area.setWidgetResizable(True)
-        scroll_area.setObjectName('red_scroll_area')
+        table_labels = ['الإسم', 'تاريخ الميلاد', 'السنة الدراسية', 'الإقامة', 'رقم الهاتف']
+        page_layout.addWidget(self.table_creator(table_labels, True))
 
-        scroll_area2 = QScrollArea()
-        scroll_area2.setWidgetResizable(True)
-        scroll_area2.setObjectName('red_scroll_area')
-
-
-
-        
-
-        page_layout.addLayout(frames_layout)
         page_layout.setAlignment(Qt.AlignTop)
 
 
@@ -293,8 +406,12 @@ class MainPage(QWidget):
 
         self.stacked_widget = QStackedWidget()
         self.stacked_widget.addWidget(self.dasboard_page())   
-        self.stacked_widget.addWidget(self.students_page())  
-      
+        self.stacked_widget.addWidget(self.students_page())
+        self.stacked_widget.addWidget(self.teachers_page())  
+        self.stacked_widget.addWidget(self.courses_page())
+        self.stacked_widget.addWidget(self.payments_page())
+
+
         main_content.addWidget(self.stacked_widget)
         main_content.setAlignment(Qt.AlignTop)
 
