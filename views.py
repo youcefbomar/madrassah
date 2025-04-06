@@ -190,6 +190,7 @@ class MainPage(QWidget):
 
         table_labels = ['إسم التلميذ', 'إسم الأستاذ', 'الكمية', 'التاريخ', 'الحالة']
         page_layout.addWidget(self.table_creator(table_labels, True))
+        page_layout.setSpacing(25)
 
         page_layout.setAlignment(Qt.AlignTop)
 
@@ -215,6 +216,7 @@ class MainPage(QWidget):
 
         table_labels = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00']
         page_layout.addWidget(self.table_creator(table_labels, False))
+        page_layout.setSpacing(25)
 
         page_layout.setAlignment(Qt.AlignTop)
 
@@ -241,6 +243,7 @@ class MainPage(QWidget):
 
         table_labels = ['الإسم', 'تاريخ الميلاد', 'المادة', 'رقم الهاتف', 'الاقامة']
         page_layout.addWidget(self.table_creator(table_labels, True))
+        page_layout.setSpacing(25)
 
         page_layout.setAlignment(Qt.AlignTop)
 
@@ -267,6 +270,8 @@ class MainPage(QWidget):
 
         table_labels = ['الإسم', 'تاريخ الميلاد', 'السنة الدراسية', 'الإقامة', 'رقم الهاتف']
         page_layout.addWidget(self.table_creator(table_labels, True))
+        page_layout.setSpacing(25)
+
 
         page_layout.setAlignment(Qt.AlignTop)
 
@@ -429,6 +434,6 @@ if __name__ == "__main__":
     app.setStyle("Fusion")  
     window = MainPage()
     window.setMinimumWidth(1400)
-    window.setWindowTitle("Madrassah")
+    window.setWindowTitle("مدرسة")
     window.show()
     sys.exit(app.exec())
