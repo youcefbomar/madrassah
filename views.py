@@ -1,10 +1,12 @@
-from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
+from PySide6.QtWidgets import (QApplication, QWidget, QVBoxLayout, 
                               QHBoxLayout, QPushButton, QLabel, QFrame,QSizePolicy,
                               QStackedWidget, QScrollArea, QLineEdit, QTableWidget,
-                              QTableWidgetItem, QHeaderView)
+                              QTableWidgetItem, QHeaderView, QAbstractItemView)
 from PySide6.QtCore import Qt,QSize
 from PySide6.QtGui import QIcon, QCursor
 import sys
+
+from services import *
 
 
 
@@ -134,17 +136,8 @@ class MainPage(QWidget):
         return search_bar
 
 
-    def table_creator(self, labels, sortable):
+    def table_creator(self, labels, sortable, data):
         
-        data = [
-            ["بوسعيد", 30, "USA",30],
-            ["آدم", 25, "Canada",30],
-            ["يوسف", 35, "UK",30],
-            ["يحيا", 28, "Australia",30],
-            ["مات", 22, "Germany",30],
-        ]
-        
-
 
         table = QTableWidget(len(data), len(labels))
         table.setHorizontalHeaderLabels(labels)
@@ -152,23 +145,24 @@ class MainPage(QWidget):
         
 
         for row_idx, row_data in enumerate(data):
-            for col_idx, value in enumerate(row_data):
-                
+            for col_idx, value in enumerate(row_data[1:]):  # skip ID
                 item = QTableWidgetItem(str(value))
-                if col_idx == 1:
-                    item.setData(Qt.EditRole, int(value))
                 item.setFlags(item.flags() & ~Qt.ItemIsEditable)
                 table.setItem(row_idx, col_idx, item)
+
+            id_item = QTableWidgetItem(f"ID: {row_data[0]}")
+            table.setVerticalHeaderItem(row_idx, id_item)
                 
-            item = QTableWidgetItem(f"ID: {row_idx+15}")
-            table.setVerticalHeaderItem(row_idx, item)
+
 
 
         table.setSortingEnabled(sortable)
-
-
         table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        table.setSelectionBehavior(QAbstractItemView.SelectRows)
 
+        #table.cellDoubleClicked.connect() keep this to make the editing windows
+
+        
         return table
 
 
@@ -188,8 +182,8 @@ class MainPage(QWidget):
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
 
-        table_labels = ['إسم التلميذ', 'إسم الأستاذ', 'الكمية', 'التاريخ', 'الحالة']
-        page_layout.addWidget(self.table_creator(table_labels, True))
+        table_labels = ['إسم التلميذ', 'إسم الأستاذ', 'الكمية', 'التاريخ', 'الشهر', 'الحالة']
+        page_layout.addWidget(self.table_creator(table_labels, True, returning_payments_table()))
         page_layout.setSpacing(25)
 
         page_layout.setAlignment(Qt.AlignTop)
@@ -214,8 +208,8 @@ class MainPage(QWidget):
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
 
-        table_labels = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00']
-        page_layout.addWidget(self.table_creator(table_labels, False))
+        table_labels = ['الأستاذ', 'المادة', 'الفترة', 'السنة الدراسية' ,'الحجرة' ,'السعر' ,'نسبة الأستاذ']
+        page_layout.addWidget(self.table_creator(table_labels, True, returning_classes_table()))
         page_layout.setSpacing(25)
 
         page_layout.setAlignment(Qt.AlignTop)
@@ -242,7 +236,7 @@ class MainPage(QWidget):
         #--------------------------------------------------
 
         table_labels = ['الإسم', 'تاريخ الميلاد', 'المادة', 'رقم الهاتف', 'الاقامة']
-        page_layout.addWidget(self.table_creator(table_labels, True))
+        page_layout.addWidget(self.table_creator(table_labels, True, returning_teachers_table()))
         page_layout.setSpacing(25)
 
         page_layout.setAlignment(Qt.AlignTop)
@@ -268,8 +262,8 @@ class MainPage(QWidget):
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
 
-        table_labels = ['الإسم', 'تاريخ الميلاد', 'السنة الدراسية', 'الإقامة', 'رقم الهاتف']
-        page_layout.addWidget(self.table_creator(table_labels, True))
+        table_labels = ['الإسم', 'تاريخ الميلاد', 'رقم الهاتف', 'السنة الدراسية', 'الإقامة']
+        page_layout.addWidget(self.table_creator(table_labels, True, returning_students_table()))
         page_layout.setSpacing(25)
 
 
@@ -430,6 +424,7 @@ class MainPage(QWidget):
        
 
 if __name__ == "__main__":
+
     app = QApplication(sys.argv)
     app.setStyle("Fusion")  
     window = MainPage()

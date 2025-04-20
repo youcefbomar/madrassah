@@ -13,9 +13,10 @@ def creates_students_table ():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name VARCHAR(50) NOT NULL,
         date_of_birth DATE NOT NULL,
+        phone_number VARCHAR(10) NOT NULL,
         academic_year VARCHAR(50) NOT NULL,
-        residance VARCHAR(50) NOT NULL,
-        phone_number VARCHAR(10) NOT NULL
+        residance VARCHAR(50) NOT NULL
+        
     )
     """)
 
@@ -174,52 +175,53 @@ def add_payment(enrollment_id, amount, marked_date, mounth, status):
 
 
 if __name__ == "__main__":
-    creates_students_table()
-    creates_teachers_table()
-    creates_classes_table()
-    creates_enrollment_table()
-    creates_payments_table()
+    for i in range(60): 
+        creates_students_table()
+        creates_teachers_table()
+        creates_classes_table()
+        creates_enrollment_table()
+        creates_payments_table()
 
-    add_teacher('hemza', '1990', '066988557', '2005', '066988557')
-    add_student('Joseph', '2005', '066988557', '066988557','chateu d\'eau')
-    add_classe(1, '2005', '066988557', '066988557','chateu d\'eau','3000','20')
-    add_enrollment(1,1,'20/11/2005')
-    add_payment(1,1000,'20/11/2005','march','FALSE')
-    conn = sqlite3.connect("my_database.db")
-    cursor = conn.cursor()
+        add_teacher('hemza', '1990', 'Phisics', '066988557', 'Kherba')
+        add_student('Joseph', '2005', '066988557', '1er','chateu d\'eau')
+        add_classe(1, 'math', '066988557', '066988557','chateu d\'eau','3000','20')
+        add_enrollment(1,1,'20/11/2005')
+        add_payment(1,1000,'20/11/2005','march','مدفوع')
+        conn = sqlite3.connect("my_database.db")
+        cursor = conn.cursor()
 
-    cursor.execute("PRAGMA foreign_keys = ON;")
+        cursor.execute("PRAGMA foreign_keys = ON;")
 
-    cursor.execute("SELECT * FROM students")
-    users = cursor.fetchall()  # Get all rows
-    for user in users:
-        print(user)  # Example output: (1, 'Alice', 25)
-
-
-    cursor.execute("SELECT * FROM teachers")
-    users = cursor.fetchall()  # Get all rows
-    for user in users:
-        print(user)  # Example output: (1, 'Alice', 25)
+        cursor.execute("SELECT * FROM students")
+        users = cursor.fetchall()  # Get all rows
+        for user in users:
+            print(user)  # Example output: (1, 'Alice', 25)
 
 
+        cursor.execute("SELECT * FROM teachers")
+        users = cursor.fetchall()  # Get all rows
+        for user in users:
+            print(user)  # Example output: (1, 'Alice', 25)
 
-    cursor.execute("SELECT * FROM classes")
-    users = cursor.fetchall()  # Get all rows
-    for user in users:
-        print(user)  # Example output: (1, 'Alice', 25)
 
 
-    cursor.execute("SELECT * FROM enrollment")
-    users = cursor.fetchall()  # Get all rows
-    for user in users:
-        print(user)  # Example output: (1, 'Alice', 25)
-        
+        cursor.execute("SELECT * FROM classes")
+        users = cursor.fetchall()  # Get all rows
+        for user in users:
+            print(user)  # Example output: (1, 'Alice', 25)
 
-    cursor.execute("SELECT * FROM payments")
-    users = cursor.fetchall()  # Get all rows
-    for user in users:
-        print(user)  # Example output: (1, 'Alice', 25)
 
-    conn.commit()
-    cursor.close()
+        cursor.execute("SELECT * FROM enrollment")
+        users = cursor.fetchall()  # Get all rows
+        for user in users:
+            print(user)  # Example output: (1, 'Alice', 25)
+
+
+        cursor.execute("SELECT * FROM payments")
+        users = cursor.fetchall()  # Get all rows
+        for user in users:
+            print(user)  # Example output: (1, 'Alice', 25)
+
+        conn.commit()
+        cursor.close()
 
