@@ -79,9 +79,10 @@ QPushButton.nav_btn[active="true"] {
     background: none;
     color: #181818;
     font-weight: 650;
-    font-size: 30px;
+    font-size: 26px;
     padding-right: 50px;
     padding-bottom: 10px;
+    padding-top : 20px;
 }
 
 #card_title3{
@@ -191,4 +192,65 @@ QTableCornerButton::section {
 QTableWidget QHeaderView::section:horizontal {
     background-color: #009688; /* Column headers (top) */
     color: white;
+}
+
+
+#add_windows_text1{
+    color: black;
+    font-size : 18px;
+}
+
+QComboBox {
+    color: black;
+    border: 1px solid #afafaf;
+    border-radius: 8px;
+    padding:5px;
+    font-size: 12px;
+}
+QComboBox::drop-down {
+    width: 0px;
+    border: none;
+}
+QComboBox::down-arrow {
+    image: none;
+}
+
+#add_button{
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0.2 #4CCD99, stop: 1 #007F73);
+    color: white;
+    border: none;
+    border-radius: 8px ;
+    padding: 5px;
+    font-weight: 650;
+    font-size: 18px;
+    margin : 20px;
+}
+
+#add_button:hover {
+        background-color: #007F73;
+}
+
+#cancel_button{
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0.2 #ff4141, stop: 1 #920909);
+    color: white;
+    border: none;
+    border-radius: 8px ;
+    padding: 5px;
+    font-weight: 650;
+    font-size: 18px;
+    margin : 20px;
+}
+
+#cancel_button:hover {
+        background-color: #920909;
+}
+
+
+#add_student_title{
+    background: none;
+    color: #181818;
+    font-weight: 650;
+    font-size: 26px;
+    padding-right: 50px;
+    padding-bottom: 20px;
 }

@@ -1,14 +1,12 @@
 from PySide6.QtWidgets import (QApplication, QWidget, QVBoxLayout, 
                               QHBoxLayout, QPushButton, QLabel, QFrame,QSizePolicy,
                               QStackedWidget, QScrollArea, QLineEdit, QTableWidget,
-                              QTableWidgetItem, QHeaderView, QAbstractItemView)
+                              QTableWidgetItem, QHeaderView, QAbstractItemView, QDialog, QComboBox)
 from PySide6.QtCore import Qt,QSize
 from PySide6.QtGui import QIcon, QCursor
 import sys
 
 from services import *
-
-
 
 
 
@@ -96,8 +94,244 @@ class MainPage(QWidget):
         layout.addWidget(button,1)
 
         return card
+    
+    def create_text_with_bar(self, text='', spacing=10):
+        
+        layout = QHBoxLayout()
+
+        text = QLabel(f'{text}')
+        text.setObjectName('add_windows_text1')
+
+        bar = QLineEdit()
+        bar.setPlaceholderText("")
+        bar.setMaximumHeight(40)
+        
+        layout.addWidget(bar)
+        layout.addWidget(text)
+
+        layout.setSpacing(spacing)
+
+        return layout
+    
+    def create_text_with_dropdown(self, text='', dropdown_text=[''], spacing=10):
+        
+        layout = QHBoxLayout()
+
+        text = QLabel(f'{text}')
+        text.setObjectName('add_windows_text1')
+
+        combo = QComboBox()
+        combo.addItems(dropdown_text)
+        combo.setEditable(False) 
+        combo.setFixedHeight(40) 
+        
+        layout.addWidget(combo, stretch=1)
+        layout.addWidget(text, stretch=0)
+
+        layout.setSpacing(spacing)
+
+        return layout
+
+
+    #def create_text_with_select(self) :
+
+
+    def add_student_window(self) :
+       
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Add Student")
+        dialog.setGeometry(50, 50, 600, 350)
+
+        layout = QVBoxLayout(dialog)
+        layout.addWidget(QLabel("Add student form goes here..."))
+
+        header = QLabel("إضافة تلميذ")
+        header.setObjectName("add_student_title")
+
+        layout.addWidget(header)
+
+        #------------------------- Text Bars -----------------------------
+
+        accademic_years= ["تحضيري","أولى ابتدائي", "ثاني ابتدائي", "ثالث ابتدائي",
+                           "رابع ابتدائي","خامس ابتدائي","أولى متوسط", "ثاني متوسط",
+                            "ثالث متوسط", "رابع متوسط","أولى ثانوي", "ثاني ثانوي", "باكالوريا" ]
+
+        name_layout = self.create_text_with_bar('اسم التلميذ:',10)
+        age_layout = self.create_text_with_bar('سنة الميلاد:',10)
+        phone_layout = self.create_text_with_bar('رقم الهاتف:',18)
+        accademic_layout = self.create_text_with_dropdown('السنة الدراسية:', accademic_years,-10)
+        location_layout = self.create_text_with_bar('الإقامة:',30)
+    
+
+        layout.addLayout(name_layout)
+        layout.addLayout(age_layout)
+        layout.addLayout(phone_layout)
+        layout.addLayout(accademic_layout)
+        layout.addLayout(location_layout)
+        #-----------------------------------------------------------------
+
+        #------------------------Buttons----------------------------------
+
+        buttons = QHBoxLayout()
+
+        save_button = QPushButton("أضف")
+        save_button.setObjectName("add_button")
+        save_button.setCursor(QCursor(Qt.PointingHandCursor))
+
+        cancel_button = QPushButton("إلغاء")
+        cancel_button.setObjectName("cancel_button")
+        cancel_button.setCursor(QCursor(Qt.PointingHandCursor))
+
+        buttons.addWidget(save_button)
+        buttons.addWidget(cancel_button)
+
+        buttons.setSpacing(15)
+
+        layout.addLayout(buttons)
+
+        #-------------------------------------------------------------------
+
+        layout.setAlignment(Qt.AlignTop)
+
+        dialog.setModal(True)
+        dialog.exec()
+
+
+    def add_teacher_window(self) :
+       
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Add Student")
+        dialog.setGeometry(50, 50, 600, 350)
+
+        layout = QVBoxLayout(dialog)
+        layout.addWidget(QLabel("Add student form goes here..."))
+
+        header = QLabel("إضافة معلم")
+        header.setObjectName("add_student_title")
+
+        layout.addWidget(header)
+
+        #------------------------- Text Bars -----------------------------
+
+        accademic_years= ["رياضيات", "فيزياء", "علوم طبيعية", "لغة عربية",
+                          "لغة فرنسية","لغة إنجليزية", "فلسفة", "تاريخ و جغرافيا", "متعدد",
+                          "أخرى"]
+        
+        accademic_levels= ["تحضيري","إبتدائي", "متوسط", "ثانوي","باكالوريا", "متعدد"]
+
+        name_layout = self.create_text_with_bar('اسم الأستاذ:',10)
+        age_layout = self.create_text_with_bar('سنة الميلاد:',10)
+        accademic_layout = self.create_text_with_dropdown('المادة :', accademic_years,-10)
+        accademic_level_layout = self.create_text_with_dropdown('مرحلة التدريس :', accademic_levels,-10)
+        phone_layout = self.create_text_with_bar('رقم الهاتف:',18)
+        location_layout = self.create_text_with_bar('الإقامة:',30)
+    
+
+        layout.addLayout(name_layout)
+        layout.addLayout(age_layout)
+        layout.addLayout(phone_layout)
+        layout.addLayout(accademic_layout)
+        layout.addLayout(accademic_level_layout)
+        layout.addLayout(location_layout)
+        #-----------------------------------------------------------------
+
+        #------------------------Buttons----------------------------------
+
+        buttons = QHBoxLayout()
+
+        save_button = QPushButton("أضف")
+        save_button.setObjectName("add_button")
+        save_button.setCursor(QCursor(Qt.PointingHandCursor))
+
+        cancel_button = QPushButton("إلغاء")
+        cancel_button.setObjectName("cancel_button")
+        cancel_button.setCursor(QCursor(Qt.PointingHandCursor))
+
+        buttons.addWidget(save_button)
+        buttons.addWidget(cancel_button)
+
+        buttons.setSpacing(15)
+
+        layout.addLayout(buttons)
+
+        #-------------------------------------------------------------------
+
+        layout.setAlignment(Qt.AlignTop)
+
+        dialog.setModal(True)
+        dialog.exec()
+
+
+    def add_course_window(self) :
+       
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Add Student")
+        dialog.setGeometry(50, 50, 600, 350)
+
+        layout = QVBoxLayout(dialog)
+        layout.addWidget(QLabel("Add student form goes here..."))
+
+        header = QLabel("إضافة حصة")
+        header.setObjectName("add_student_title")
+
+        layout.addWidget(header)
+
+        #------------------------- Text Bars -----------------------------
+
+        accademic_materials= ["رياضيات", "فيزياء", "علوم طبيعية", "لغة عربية",
+                          "لغة فرنسية","لغة إنجليزية", "فلسفة", "تاريخ و جغرافيا", "أخرى"]
+        
+        accademic_years= ["تحضيري","أولى ابتدائي", "ثاني ابتدائي", "ثالث ابتدائي",
+                           "رابع ابتدائي","خامس ابتدائي","أولى متوسط", "ثاني متوسط",
+                            "ثالث متوسط", "رابع متوسط","أولى ثانوي", "ثاني ثانوي", "باكالوريا" ]
+
+        teacher_name_layout = self.create_text_with_bar('اسم الأستاذ :',10)
+        accademic_material_layout = self.create_text_with_dropdown('المادة :', accademic_materials,10)
+        time_layout = self.create_text_with_bar('الفترة :',10)
+        accademic_level_layout = self.create_text_with_dropdown('السنة الدراسية :', accademic_years,10)
+        class_layout = self.create_text_with_bar('الحجرة :',10)
+        price_layout = self.create_text_with_bar('السعر :',10)
+        percentage_layout = self.create_text_with_bar('نسبة الأستاذ:',10)
+    
+
+        layout.addLayout(teacher_name_layout)
+        layout.addLayout(accademic_material_layout)
+        layout.addLayout(time_layout)
+        layout.addLayout(accademic_level_layout)
+        layout.addLayout(class_layout)
+        layout.addLayout(price_layout)
+        layout.addLayout(percentage_layout)
+        #-----------------------------------------------------------------
+
+        #------------------------Buttons----------------------------------
+
+        buttons = QHBoxLayout()
+
+        save_button = QPushButton("أضف")
+        save_button.setObjectName("add_button")
+        save_button.setCursor(QCursor(Qt.PointingHandCursor))
+
+        cancel_button = QPushButton("إلغاء")
+        cancel_button.setObjectName("cancel_button")
+        cancel_button.setCursor(QCursor(Qt.PointingHandCursor))
+
+        buttons.addWidget(save_button)
+        buttons.addWidget(cancel_button)
+
+        buttons.setSpacing(15)
+
+        layout.addLayout(buttons)
+
+        #-------------------------------------------------------------------
+
+        layout.setAlignment(Qt.AlignTop)
+
+        dialog.setModal(True)
+        dialog.exec()
+
+
          
-    def search_bar_maker(self):
+    def search_bar_maker(self, search_action=None, add_action=None):
 
         search_bar = QWidget()
         search_bar.setMinimumSize(300,80)
@@ -122,6 +356,8 @@ class MainPage(QWidget):
         search_button.setObjectName('search_button')
         search_button.setMaximumSize(200,40)
         search_button.setCursor(QCursor(Qt.PointingHandCursor))
+        search_button.clicked.connect(search_action)
+
 
         layout.addWidget(search_button)
 
@@ -130,6 +366,7 @@ class MainPage(QWidget):
         add_button.setObjectName('search_button')
         add_button.setMaximumSize(200,40)
         add_button.setCursor(QCursor(Qt.PointingHandCursor))
+        add_button.clicked.connect(add_action)
 
         layout.addWidget(add_button)
 
@@ -150,9 +387,6 @@ class MainPage(QWidget):
                 item.setFlags(item.flags() & ~Qt.ItemIsEditable)
                 table.setItem(row_idx, col_idx, item)
 
-            id_item = QTableWidgetItem(f"ID: {row_data[0]}")
-            table.setVerticalHeaderItem(row_idx, id_item)
-                
 
 
 
@@ -177,7 +411,7 @@ class MainPage(QWidget):
         page_layout.addLayout(cards_layout)
 
         #--------- cards ----------------------------------
-        search_bar = self.search_bar_maker()
+        search_bar = self.search_bar_maker(None,lambda: self.add_student_window())
         
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
@@ -203,7 +437,7 @@ class MainPage(QWidget):
         page_layout.addLayout(cards_layout)
 
         #--------- cards ----------------------------------
-        search_bar = self.search_bar_maker()
+        search_bar = self.search_bar_maker(None,lambda: self.add_course_window())
         
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
@@ -230,7 +464,7 @@ class MainPage(QWidget):
         page_layout.addLayout(cards_layout)
 
         #--------- cards ----------------------------------
-        search_bar = self.search_bar_maker()
+        search_bar = self.search_bar_maker(None,lambda: self.add_teacher_window())
         
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
@@ -257,7 +491,7 @@ class MainPage(QWidget):
         page_layout.addLayout(cards_layout)
 
         #--------- cards ----------------------------------
-        search_bar = self.search_bar_maker()
+        search_bar = self.search_bar_maker(None,lambda: self.add_student_window())
         
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
@@ -286,9 +520,10 @@ class MainPage(QWidget):
         page_layout.addLayout(cards_layout)
 
         #--------- cards ----------------------------------
-        card1 = self.card_maker('المعلمين  :','190')
-        card2 = self.card_maker('التلاميذ  :','3000')
-        card3 = self.card_maker('الحصص  :','300')
+        
+        card1 = self.card_maker('المعلمين  :', get_number_of_teachers())
+        card2 = self.card_maker('التلاميذ  :', get_number_of_students())
+        card3 = self.card_maker('الحصص  :', get_number_of_classes())
         
         cards_layout.addWidget(card1)
         cards_layout.addWidget(card2)

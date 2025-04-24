@@ -101,11 +101,13 @@ def creates_payments_table ():
         enrollment_id INTEGER NOT NULL,
         amount INT NOT NULL,
         marked_date DATE,
-        mounth VARCHAR(50),
+        time_method VARCHAR(50), 
         status TEXT
 
     )
     """)
+
+    # time_method == how he is going to pay (mounthly / by number of attendance)
 
     conn.commit()
     cursor.close()
@@ -175,53 +177,21 @@ def add_payment(enrollment_id, amount, marked_date, mounth, status):
 
 
 if __name__ == "__main__":
-    for i in range(60): 
-        creates_students_table()
+    for i in range(66): 
         creates_teachers_table()
+        add_teacher('حمزة غراسي', '1990', 'فيزياء', '066988557', 'الخربة')
+
+    for i in range(300): 
+        creates_students_table()
+        add_student('بوطواطو يوسف', '2005', '066988557', 'ثاني ثانوي','حي قصر الماء')
+
+    for i in range(20): 
         creates_classes_table()
         creates_enrollment_table()
         creates_payments_table()
 
-        add_teacher('hemza', '1990', 'Phisics', '066988557', 'Kherba')
-        add_student('Joseph', '2005', '066988557', '1er','chateu d\'eau')
-        add_classe(1, 'math', '066988557', '066988557','chateu d\'eau','3000','20')
+        
+        
+        add_classe(1, 'رياضيات', '8:30 - 10:00', 'اولى متوسط','حي قصر الماء','3000','20')
         add_enrollment(1,1,'20/11/2005')
-        add_payment(1,1000,'20/11/2005','march','مدفوع')
-        conn = sqlite3.connect("my_database.db")
-        cursor = conn.cursor()
-
-        cursor.execute("PRAGMA foreign_keys = ON;")
-
-        cursor.execute("SELECT * FROM students")
-        users = cursor.fetchall()  # Get all rows
-        for user in users:
-            print(user)  # Example output: (1, 'Alice', 25)
-
-
-        cursor.execute("SELECT * FROM teachers")
-        users = cursor.fetchall()  # Get all rows
-        for user in users:
-            print(user)  # Example output: (1, 'Alice', 25)
-
-
-
-        cursor.execute("SELECT * FROM classes")
-        users = cursor.fetchall()  # Get all rows
-        for user in users:
-            print(user)  # Example output: (1, 'Alice', 25)
-
-
-        cursor.execute("SELECT * FROM enrollment")
-        users = cursor.fetchall()  # Get all rows
-        for user in users:
-            print(user)  # Example output: (1, 'Alice', 25)
-
-
-        cursor.execute("SELECT * FROM payments")
-        users = cursor.fetchall()  # Get all rows
-        for user in users:
-            print(user)  # Example output: (1, 'Alice', 25)
-
-        conn.commit()
-        cursor.close()
-
+        add_payment(1,1000,'20/11/2005','مارس','مدفوع')

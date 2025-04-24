@@ -29,8 +29,23 @@ def payment_id_changer(payments_list) :
 
 
     return payments_list
-        
 
+
+
+
+def classes_id_changer(classes_list) :
+    conn = sqlite3.connect('my_database.db')
+    cursor = conn.cursor()
+    for row_number, row in enumerate(classes_list) :
+        teacher_id = row[1]
+
+        cursor.execute("SELECT * FROM teachers WHERE id = ?", (teacher_id,))
+        teacher_name = cursor.fetchone()[1]
+
+        classes_list[row_number][1] = teacher_name
+
+
+    return classes_list
 
 
 
@@ -121,17 +136,55 @@ def returning_classes_table():
     cursor.execute("PRAGMA foreign_keys = ON;")
     
     cursor.execute("SELECT * FROM classes")
-    users = cursor.fetchall()  # Get all rows
+    users = [list(row) for row in cursor.fetchall()]
+
     for user in users:
+
         rows.append(user)
-    
+
+    rows = classes_id_changer(rows)
+
     return rows
+
+
+def get_number_of_teachers() :
+    conn = sqlite3.connect("my_database.db")
+    cursor = conn.cursor()
+
+    # Execute the count query
+    cursor.execute("SELECT COUNT(*) FROM teachers")
+    count = str(cursor.fetchone()[0])
+
+    return count
+
+
+def get_number_of_students() :
+    conn = sqlite3.connect("my_database.db")
+    cursor = conn.cursor()
+
+
+    # Execute the count query
+    cursor.execute("SELECT COUNT(*) FROM students")
+    count = str(cursor.fetchone()[0])
+
+    return count
+
+
+def get_number_of_classes() :
+    conn = sqlite3.connect("my_database.db")
+    cursor = conn.cursor()
+
+    # Execute the count query
+    cursor.execute("SELECT COUNT(*) FROM classes")
+    count = str(cursor.fetchone()[0])
+
+    return count
 
 
 
 
 if __name__ == "__main__" :
     
-    
-    print(returning_classes_table()[1])
+    print('asdadsa')
+
 
