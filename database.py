@@ -164,7 +164,7 @@ def add_payment(enrollment_id, amount, marked_date, mounth, status):
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO payments(enrollment_id, amount, marked_date, mounth, status) VALUES (?, ?, ?, ?, ?)", (enrollment_id, amount, marked_date, mounth, status))
+    cursor.execute("INSERT INTO payments(enrollment_id, amount, marked_date, time_method, status) VALUES (?, ?, ?, ?, ?)", (enrollment_id, amount, marked_date, mounth, status))
 
 
     conn.commit()
@@ -178,19 +178,15 @@ def add_payment(enrollment_id, amount, marked_date, mounth, status):
 
 if __name__ == "__main__":
     for i in range(66): 
-        creates_teachers_table()
+
         add_teacher('حمزة غراسي', '1990', 'فيزياء', '066988557', 'الخربة')
 
     for i in range(300): 
-        creates_students_table()
+
         add_student('بوطواطو يوسف', '2005', '066988557', 'ثاني ثانوي','حي قصر الماء')
 
     for i in range(20): 
-        creates_classes_table()
-        creates_enrollment_table()
-        creates_payments_table()
 
-        
         
         add_classe(1, 'رياضيات', '8:30 - 10:00', 'اولى متوسط','حي قصر الماء','3000','20')
         add_enrollment(1,1,'20/11/2005')

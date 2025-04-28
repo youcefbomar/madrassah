@@ -60,6 +60,8 @@ def creating_all_tables() :
 
 def enrollment_extractor():
 
+    creating_all_tables()
+
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
 
@@ -70,113 +72,156 @@ def enrollment_extractor():
 
 
 def returning_students_table():
-
     rows = []
 
-    conn = sqlite3.connect("my_database.db")
-    cursor = conn.cursor()
+    try :
+        conn = sqlite3.connect("my_database.db")
+        cursor = conn.cursor()
 
-    cursor.execute("PRAGMA foreign_keys = ON;")
-    
-    cursor.execute("SELECT * FROM students")
-    users = cursor.fetchall()  # Get all rows
-    for user in users:
-        rows.append(user)
-    
+        cursor.execute("PRAGMA foreign_keys = ON;")
+
+        cursor.execute("SELECT * FROM students")
+        users = cursor.fetchall()  # Get all rows
+        for user in users:
+            rows.append(user)
+
+    except :
+        pass
+
     return rows
 
 
 
 def returning_teachers_table():
-
     rows = []
 
-    conn = sqlite3.connect("my_database.db")
-    cursor = conn.cursor()
+    try:
+        conn = sqlite3.connect("my_database.db")
+        cursor = conn.cursor()
 
-    cursor.execute("PRAGMA foreign_keys = ON;")
-    
-    cursor.execute("SELECT * FROM teachers")
-    users = cursor.fetchall()  # Get all rows
-    for user in users:
-        rows.append(user)
-    
+        cursor.execute("PRAGMA foreign_keys = ON;")
+
+        cursor.execute("SELECT * FROM teachers")
+        users = cursor.fetchall()  # Get all rows
+        for user in users:
+            rows.append(user)
+
+    except:
+        pass
+
     return rows
+
+
+def returning_teachers_names():
+    rows = []
+
+    try:
+        conn = sqlite3.connect("my_database.db")
+        cursor = conn.cursor()
+
+        cursor.execute("PRAGMA foreign_keys = ON;")
+
+        cursor.execute("SELECT * FROM teachers")
+        users = cursor.fetchall()  # Get all rows
+        for user in users:
+            rows.append(user[1])
+
+    except:
+        pass
+
+    return rows    
 
 
 
 def returning_payments_table():
-
     rows = []
 
-    conn = sqlite3.connect("my_database.db")
-    cursor = conn.cursor()
+    try:
+        conn = sqlite3.connect("my_database.db")
+        cursor = conn.cursor()
 
-    cursor.execute("PRAGMA foreign_keys = ON;")
-    
-    cursor.execute("SELECT * FROM payments")
-    users = [list(row) for row in cursor.fetchall()]
+        cursor.execute("PRAGMA foreign_keys = ON;")
 
-    for user in users:
+        cursor.execute("SELECT * FROM payments")
+        users = [list(row) for row in cursor.fetchall()]
 
-        rows.append(user)
+        for user in users:
 
-    rows = payment_id_changer(rows)
+            rows.append(user)
+
+        rows = payment_id_changer(rows)
+    except:
+        pass
 
     return rows
 
 
 def returning_classes_table():
-
     rows = []
 
-    conn = sqlite3.connect("my_database.db")
-    cursor = conn.cursor()
+    try:
+        conn = sqlite3.connect("my_database.db")
+        cursor = conn.cursor()
 
-    cursor.execute("PRAGMA foreign_keys = ON;")
+        cursor.execute("PRAGMA foreign_keys = ON;")
+
+        cursor.execute("SELECT * FROM classes")
+        users = [list(row) for row in cursor.fetchall()]
+
+        for user in users:
+
+            rows.append(user)
+
+        rows = classes_id_changer(rows)
+
+    except:
+        pass
     
-    cursor.execute("SELECT * FROM classes")
-    users = [list(row) for row in cursor.fetchall()]
-
-    for user in users:
-
-        rows.append(user)
-
-    rows = classes_id_changer(rows)
-
     return rows
 
 
 def get_number_of_teachers() :
-    conn = sqlite3.connect("my_database.db")
-    cursor = conn.cursor()
 
-    # Execute the count query
-    cursor.execute("SELECT COUNT(*) FROM teachers")
-    count = str(cursor.fetchone()[0])
+    count = "0"
+    try :
+        conn = sqlite3.connect("my_database.db")
+        cursor = conn.cursor()
+
+        # Execute the count query
+        cursor.execute("SELECT COUNT(*) FROM teachers")
+        count = str(cursor.fetchone()[0])
+    except :
+        pass
 
     return count
 
 
 def get_number_of_students() :
-    conn = sqlite3.connect("my_database.db")
-    cursor = conn.cursor()
+    count = "0"
+    try :
+        conn = sqlite3.connect("my_database.db")
+        cursor = conn.cursor()
 
-
-    # Execute the count query
-    cursor.execute("SELECT COUNT(*) FROM students")
-    count = str(cursor.fetchone()[0])
+        # Execute the count query
+        cursor.execute("SELECT COUNT(*) FROM students")
+        count = str(cursor.fetchone()[0])
+    except :
+        pass
 
     return count
 
 
 def get_number_of_classes() :
-    conn = sqlite3.connect("my_database.db")
-    cursor = conn.cursor()
+    count = "0"
+    try :
+        conn = sqlite3.connect("my_database.db")
+        cursor = conn.cursor()
 
-    # Execute the count query
-    cursor.execute("SELECT COUNT(*) FROM classes")
-    count = str(cursor.fetchone()[0])
+        # Execute the count query
+        cursor.execute("SELECT COUNT(*) FROM classes")
+        count = str(cursor.fetchone()[0])
+    except :
+        pass
 
     return count
 
