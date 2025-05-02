@@ -743,6 +743,38 @@ class MainPage(QWidget):
         return table
 
 
+    def settings_page(self):
+
+        container = QWidget()
+        page_layout= QVBoxLayout(container) 
+
+        cards_layout = QHBoxLayout()
+
+
+        page_layout.addLayout(cards_layout)
+
+        page_layout.setAlignment(Qt.AlignTop)
+
+
+        return container
+    
+
+    def accounting_page(self):
+
+        container = QWidget()
+        page_layout= QVBoxLayout(container) 
+
+        cards_layout = QHBoxLayout()
+
+
+        page_layout.addLayout(cards_layout)
+
+        page_layout.setAlignment(Qt.AlignTop)
+
+
+        return container
+
+
     def payments_page(self):
 
         container = QWidget()
@@ -989,7 +1021,7 @@ class MainPage(QWidget):
 
         self.stacked_widget = QStackedWidget()
         
-        pages = [self.dasboard_page(), self.students_page(), self.teachers_page(), self.courses_page(), self.payments_page()]
+        pages = [self.dasboard_page(), self.students_page(), self.teachers_page(), self.courses_page(), self.payments_page(), self.accounting_page(), self.settings_page()]
 
         for page in pages :
             self.stacked_widget.addWidget(page)
