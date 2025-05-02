@@ -1,4 +1,5 @@
 these are all the libraries used in the Vertual Environment :
 
+    python  (3.12.8)
     PySide6 (6.8.2.1)
     sqlite3

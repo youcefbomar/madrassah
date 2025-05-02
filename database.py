@@ -13,9 +13,10 @@ def creates_students_table ():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name VARCHAR(50) NOT NULL,
         date_of_birth DATE NOT NULL,
-        academic_year VARCHAR(50) NOT NULL,
         phone_number VARCHAR(10) NOT NULL,
+        academic_year VARCHAR(50) NOT NULL,
         residance VARCHAR(50) NOT NULL
+        
     )
     """)
 
@@ -36,7 +37,6 @@ def creates_teachers_table() :
         date_of_birth DATE NOT NULL,
         subject VARCHAR(50),
         phone_number VARCHAR(10) NOT NULL,
-        email VARCHAR(50),
         residance VARCHAR(50)
     )
     """)
@@ -101,11 +101,13 @@ def creates_payments_table ():
         enrollment_id INTEGER NOT NULL,
         amount INT NOT NULL,
         marked_date DATE,
-        mounth VARCHAR(50),
+        time_method VARCHAR(50), 
         status TEXT
 
     )
     """)
+
+    # time_method == how he is going to pay (mounthly / by number of attendance)
 
     conn.commit()
     cursor.close()
@@ -123,11 +125,11 @@ def add_student(name, date_of_birth, phone_number, academic_year, residance):
     cursor.close()
 
 
-def add_teacher(name, date_of_birth, subject, phone_number, email, residance):
+def add_teacher(name, date_of_birth, subject, phone_number, residance):
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO teachers (name, date_of_birth, subject, phone_number, email, residance) VALUES (?, ?, ?, ?, ?, ?)", (name, date_of_birth, subject, phone_number, email, residance))
+    cursor.execute("INSERT INTO teachers (name, date_of_birth, subject, phone_number, residance) VALUES (?, ?, ?, ?, ?)", (name, date_of_birth, subject, phone_number, residance))
 
 
     conn.commit()
@@ -162,7 +164,7 @@ def add_payment(enrollment_id, amount, marked_date, mounth, status):
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO payments(enrollment_id, amount, marked_date, mounth, status) VALUES (?, ?, ?, ?, ?)", (enrollment_id, amount, marked_date, mounth, status))
+    cursor.execute("INSERT INTO payments(enrollment_id, amount, marked_date, time_method, status) VALUES (?, ?, ?, ?, ?)", (enrollment_id, amount, marked_date, mounth, status))
 
 
     conn.commit()
@@ -174,53 +176,18 @@ def add_payment(enrollment_id, amount, marked_date, mounth, status):
 
 
 
+if __name__ == "__main__":
+    for i in range(66): 
 
-creates_students_table()
-creates_teachers_table()
-creates_classes_table()
-creates_enrollment_table()
-creates_payments_table()
+        add_teacher('حمزة غراسي', '1990', 'فيزياء', '066988557', 'الخربة')
 
-add_teacher('hemza', '1990', '066988557','Joseph', '2005', '066988557')
-add_student('Joseph', '2005', '066988557', '066988557','chateu d\'eau')
-add_classe(1, '2005', '066988557', '066988557','chateu d\'eau','3000','20')
-add_enrollment(1,1,'20/11/2005')
-add_payment(1,1000,'20/11/2005','march','FALSE')
-conn = sqlite3.connect("my_database.db")
-cursor = conn.cursor()
+    for i in range(300): 
 
-cursor.execute("PRAGMA foreign_keys = ON;")
+        add_student('بوطواطو يوسف', '2005', '066988557', 'ثاني ثانوي','حي قصر الماء')
 
-cursor.execute("SELECT * FROM students")
-users = cursor.fetchall()  # Get all rows
-for user in users:
-    print(user)  # Example output: (1, 'Alice', 25)
+    for i in range(20): 
 
-
-cursor.execute("SELECT * FROM teachers")
-users = cursor.fetchall()  # Get all rows
-for user in users:
-    print(user)  # Example output: (1, 'Alice', 25)
-
-
-
-cursor.execute("SELECT * FROM classes")
-users = cursor.fetchall()  # Get all rows
-for user in users:
-    print(user)  # Example output: (1, 'Alice', 25)
-
-
-cursor.execute("SELECT * FROM enrollment")
-users = cursor.fetchall()  # Get all rows
-for user in users:
-    print(user)  # Example output: (1, 'Alice', 25)
-    
-
-cursor.execute("SELECT * FROM payments")
-users = cursor.fetchall()  # Get all rows
-for user in users:
-    print(user)  # Example output: (1, 'Alice', 25)
-
-conn.commit()
-cursor.close()
-
+        
+        add_classe(1, 'رياضيات', '8:30 - 10:00', 'اولى متوسط','حي قصر الماء','3000','20')
+        add_enrollment(1,1,'20/11/2005')
+        add_payment(1,1000,'20/11/2005','مارس','مدفوع')
