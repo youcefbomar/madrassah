@@ -113,7 +113,7 @@ class MainPage(QWidget):
 
         layout.setSpacing(spacing)
 
-        return layout
+        return layout, bar
     
     def create_text_with_dropdown(self, text='', dropdown_text=[''], spacing=10):
         
@@ -134,7 +134,7 @@ class MainPage(QWidget):
 
         layout.setSpacing(spacing)
 
-        return layout
+        return layout, combo
 
 
     def create_text_with_button(self, text='', button_name='', functionality=None, spacing=10):
@@ -177,7 +177,7 @@ class MainPage(QWidget):
 
         layout.setSpacing(spacing)
 
-        return layout
+        return layout, time_edit
     
 
     def create_text_with_numbers(self, text='', range=(0,10000), spacing=10):
@@ -187,17 +187,17 @@ class MainPage(QWidget):
         text = QLabel(f'{text}')
         text.setObjectName('add_windows_text1')
 
-        time_edit = QSpinBox()
-        time_edit.setRange(range[0], range[1])
-        time_edit.setFixedHeight(40)
-        time_edit.setObjectName('button_with_arrows')
+        numbers_edit = QSpinBox()
+        numbers_edit.setRange(range[0], range[1])
+        numbers_edit.setFixedHeight(40)
+        numbers_edit.setObjectName('button_with_arrows')
 
-        layout.addWidget(time_edit, stretch=1)
+        layout.addWidget(numbers_edit, stretch=1)
         layout.addWidget(text, stretch=0)
 
         layout.setSpacing(spacing)
 
-        return layout
+        return layout, numbers_edit
 
 
 
@@ -572,8 +572,8 @@ class MainPage(QWidget):
         
 
         #------------------------- Text Bars -----------------------------
-        price_layout = self.create_text_with_numbers('المبلغ:', (0,1000000))
-        status_layout = self.create_text_with_dropdown('الحالة :',['مدفوع','غير مدفوع'],10)
+        price_layout, price_widget = self.create_text_with_numbers('المبلغ:', (0,1000000))
+        status_layout, status_widget = self.create_text_with_dropdown('الحالة :',['مدفوع','غير مدفوع'],10)
 
 
         layout.addLayout(price_layout)
@@ -587,6 +587,7 @@ class MainPage(QWidget):
         save_button = QPushButton("أضف")
         save_button.setObjectName("add_button")
         save_button.setCursor(QCursor(Qt.PointingHandCursor))
+        save_button.clicked.connect(lambda: (add_row_in_tables_quick_payment(self, ['بوسعيد آدم', 'حمزة غراسي', price_widget.value(), '20/11/2005', 'march', status_widget.currentText()]), dialog.close()))
 
         cancel_button = QPushButton("إلغاء")
         cancel_button.setObjectName("cancel_button")
@@ -792,7 +793,8 @@ class MainPage(QWidget):
         #--------------------------------------------------
 
         table_labels = ['إسم التلميذ', 'إسم الأستاذ', 'الكمية', 'التاريخ', 'الشهر', 'الحالة']
-        page_layout.addWidget(self.table_creator(table_labels, True, returning_payments_table()))
+        self.payments_page_table = self.table_creator(table_labels, True, returning_payments_table())
+        page_layout.addWidget(self.payments_page_table)
         page_layout.setSpacing(25)
 
         page_layout.setAlignment(Qt.AlignTop)
@@ -1040,8 +1042,10 @@ class MainPage(QWidget):
 
 if __name__ == "__main__":
 
+    creating_all_tables()
     app = QApplication(sys.argv)
-    app.setStyle("Fusion")  
+    app.setStyle("Fusion")
+
     window = MainPage()
     window.setMinimumWidth(1000)
     window.setWindowTitle("مدرسة")

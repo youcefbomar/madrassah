@@ -1,4 +1,5 @@
 from database import *
+from PySide6.QtWidgets import QTableWidgetItem
 
 
 def payment_id_changer(payments_list) :
@@ -225,6 +226,20 @@ def get_number_of_classes() :
 
     return count
 
+
+
+def add_row_in_tables_quick_payment(window, list_of_settings):
+
+    #u wont believe how much i spent for those 4 lines i almost pressed the trigger
+    #-------------saves in database--------------
+    add_payment(1, list_of_settings[2], list_of_settings[3], list_of_settings[4], list_of_settings[5])
+    #--------------------------------------------
+
+    #-------------refresh the payment page--------------
+    new_page = window.payments_page()
+    window.stacked_widget.removeWidget(window.stacked_widget.widget(4))
+    window.stacked_widget.insertWidget(4, new_page)
+    #---------------------------------------------------
 
 
 
