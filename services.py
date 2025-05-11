@@ -251,9 +251,10 @@ def add_row_in_tables_students(window, list_of_settings):
 
     #-------------refresh the payment page--------------
     new_page = window.students_page()
-    window.stacked_widget.removeWidget(window.stacked_widget.widget(4))
+    window.stacked_widget.removeWidget(window.stacked_widget.widget(1))
     window.stacked_widget.insertWidget(1, new_page)
     #---------------------------------------------------
+
 
 
 def add_row_in_tables_teachers(window, list_of_settings):
@@ -264,9 +265,29 @@ def add_row_in_tables_teachers(window, list_of_settings):
 
     #-------------refresh the payment page--------------
     new_page = window.teachers_page()
-    window.stacked_widget.removeWidget(window.stacked_widget.widget(4))
+    window.stacked_widget.removeWidget(window.stacked_widget.widget(2))
     window.stacked_widget.insertWidget(2, new_page)
     #---------------------------------------------------
+
+
+
+def add_row_in_tables_classes(window, list_of_settings):
+
+    #-------------saves in database--------------
+    try :
+        add_classe(list_of_settings[0], list_of_settings[1], list_of_settings[2], list_of_settings[3], list_of_settings[4], list_of_settings[5], list_of_settings[6])
+    except :
+        creating_all_tables()
+        add_classe(list_of_settings[0], list_of_settings[1], list_of_settings[2], list_of_settings[3], list_of_settings[4], list_of_settings[5], list_of_settings[6])
+
+    #--------------------------------------------
+
+    #-------------refresh the payment page--------------
+    new_page = window.courses_page()
+    window.stacked_widget.removeWidget(window.stacked_widget.widget(3))
+    window.stacked_widget.insertWidget(3, new_page)
+    #---------------------------------------------------
+
 
 
 if __name__ == "__main__" :

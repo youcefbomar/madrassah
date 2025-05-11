@@ -450,23 +450,26 @@ class MainPage(QWidget):
                            "رابع ابتدائي","خامس ابتدائي","أولى متوسط", "ثاني متوسط",
                             "ثالث متوسط", "رابع متوسط","أولى ثانوي", "ثاني ثانوي", "باكالوريا" ]
     
-        teacher_name_layout = self.create_text_with_button('الأستاذ :', 'إختر الأستاذ', lambda:self.all_techers_window())
-        accademic_material_layout = self.create_text_with_dropdown('المادة :', accademic_materials,10)
+
 
         time_layout = QHBoxLayout()
-        time_layout.addLayout(self.create_text_with_time('ينتهي :',10))
-        time_layout.addLayout(self.create_text_with_time('يبدأ :',10))
-        accademic_level_layout = self.create_text_with_dropdown('السنة الدراسية :', accademic_years,10)
-        class_layout = self.create_text_with_bar('الحجرة :',10)
-        price_layout = self.create_text_with_numbers('السعر :', (0,1000000))
-        percentage_layout = self.create_text_with_numbers('نسبة الأستاذ :', (0,100))
+        
+        start_time_layout, start_time_widget = self.create_text_with_time('يبدأ :',10)
+        end_time_layout, end_time_widget = self.create_text_with_time('ينتهي :',10)
+
+        time_layout.addLayout(end_time_layout)
+        time_layout.addLayout(start_time_layout)
+        teacher_name_layout = self.create_text_with_button('الأستاذ :', 'إختر الأستاذ', lambda:self.all_techers_window())
+        accademic_subject_layout, accademic_material_widget = self.create_text_with_dropdown('المادة :', accademic_materials,10)
+        accademic_level_layout, accademic_level_widget = self.create_text_with_dropdown('السنة الدراسية :', accademic_years,10)
+        price_layout, price_widget = self.create_text_with_numbers('السعر :', (0,1000000))
+        percentage_layout, percentage_widget = self.create_text_with_numbers('نسبة الأستاذ :', (0,100))
     
 
         layout.addLayout(teacher_name_layout)
-        layout.addLayout(accademic_material_layout)
+        layout.addLayout(accademic_subject_layout)
         layout.addLayout(time_layout)
         layout.addLayout(accademic_level_layout)
-        layout.addLayout(class_layout)
         layout.addLayout(price_layout)
         layout.addLayout(percentage_layout)
         #-----------------------------------------------------------------
@@ -478,6 +481,10 @@ class MainPage(QWidget):
         save_button = QPushButton("أضف")
         save_button.setObjectName("add_button")
         save_button.setCursor(QCursor(Qt.PointingHandCursor))
+        save_button.clicked.connect(lambda: (add_row_in_tables_classes(self, [1, accademic_material_widget.currentText(), accademic_level_widget.currentText(),
+                                                                            start_time_widget.time().toString("HH:mm"), end_time_widget.time().toString("HH:mm"),
+                                                                            price_widget.value(), percentage_widget.value()]), dialog.close()))
+
 
         cancel_button = QPushButton("إلغاء")
         cancel_button.setObjectName("cancel_button")

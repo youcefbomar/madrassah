@@ -57,8 +57,8 @@ def creates_classes_table ():
         teacher_id INT NOT NULL REFERENCES teachers(id) ON DELETE CASCADE,
         subject VARCHAR(50) NOT NULL,
         academic_year VARCHAR(50),
-        room VARCHAR(50) NOT NULL,
-        period VARCHAR(50) NOT NULL,
+        start_time VARCHAR(50) NOT NULL,
+        end_time VARCHAR(50) NOT NULL,
         price INT NOT NULL,
         teacher_percentage INT NOT NULL
     )
@@ -136,11 +136,11 @@ def add_teacher(name, accademic_year, subject, phone_number, residance):
     cursor.close()
 
 
-def add_classe(teacher_id , subject, academic_year, room, period, price, teacher_percentage):
+def add_classe(teacher_id , subject, academic_year, start_time, end_time, price, teacher_percentage):
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO classes (teacher_id , subject, academic_year, room, period, price, teacher_percentage) VALUES (?, ?, ?, ?, ?, ?, ?)", (teacher_id , subject, academic_year, room, period, price, teacher_percentage))
+    cursor.execute("INSERT INTO classes (teacher_id , subject, academic_year, start_time, end_time, price, teacher_percentage) VALUES (?, ?, ?, ?, ?, ?, ?)", (teacher_id , subject, academic_year, start_time, end_time, price, teacher_percentage))
 
 
     conn.commit()
