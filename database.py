@@ -177,11 +177,11 @@ def add_payment(enrollment_id, amount, marked_date, mounth, status):
 
 
 if __name__ == "__main__":
-    for i in range(66): 
+    for i in range(6): 
 
         add_teacher('حمزة غراسي', '1990', 'فيزياء', '066988557', 'الخربة')
 
-    for i in range(300): 
+    for i in range(30): 
 
         add_student('بوطواطو يوسف', '2005', '066988557', 'ثاني ثانوي','حي قصر الماء')
 
@@ -190,4 +190,4 @@ if __name__ == "__main__":
         
         add_classe(1, 'رياضيات', '8:30 - 10:00', 'اولى متوسط','حي قصر الماء','3000','20')
         add_enrollment(1,1,'20/11/2005')
-        add_payment(1,1000,'20/11/2005','مارس','مدفوع')
+

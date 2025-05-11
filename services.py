@@ -230,7 +230,7 @@ def get_number_of_classes() :
 
 def add_row_in_tables_quick_payment(window, list_of_settings):
 
-    #u wont believe how much i spent for those 4 lines i almost pressed the trigger
+    #u wont believe how much i spent for those 4 lines, I almost pulled the trigger
     #-------------saves in database--------------
     add_payment(1, list_of_settings[2], list_of_settings[3], list_of_settings[4], list_of_settings[5])
     #--------------------------------------------
@@ -239,6 +239,20 @@ def add_row_in_tables_quick_payment(window, list_of_settings):
     new_page = window.payments_page()
     window.stacked_widget.removeWidget(window.stacked_widget.widget(4))
     window.stacked_widget.insertWidget(4, new_page)
+    #---------------------------------------------------
+
+
+
+def add_row_in_tables_students(window, list_of_settings):
+
+    #-------------saves in database--------------
+    add_student(list_of_settings[0], list_of_settings[1], list_of_settings[2], list_of_settings[3], list_of_settings[4])
+    #--------------------------------------------
+
+    #-------------refresh the payment page--------------
+    new_page = window.students_page()
+    window.stacked_widget.removeWidget(window.stacked_widget.widget(4))
+    window.stacked_widget.insertWidget(1, new_page)
     #---------------------------------------------------
 
 
