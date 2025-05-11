@@ -34,9 +34,9 @@ def creates_teachers_table() :
 
         id INTEGER PRIMARY KEY AUTOINCREMENT ,
         name VARCHAR(50) NOT NULL,
-        date_of_birth DATE NOT NULL,
+        accademic_year VARCHAR(50) NOT NULL,
         subject VARCHAR(50),
-        phone_number VARCHAR(10) NOT NULL,
+        phone_number VARCHAR(50) NOT NULL,
         residance VARCHAR(50)
     )
     """)
@@ -125,11 +125,11 @@ def add_student(name, date_of_birth, phone_number, academic_year, residance):
     cursor.close()
 
 
-def add_teacher(name, date_of_birth, subject, phone_number, residance):
+def add_teacher(name, accademic_year, subject, phone_number, residance):
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO teachers (name, date_of_birth, subject, phone_number, residance) VALUES (?, ?, ?, ?, ?)", (name, date_of_birth, subject, phone_number, residance))
+    cursor.execute("INSERT INTO teachers (name, accademic_year, subject, phone_number, residance) VALUES (?, ?, ?, ?, ?)", (name, accademic_year, subject, phone_number, residance))
 
 
     conn.commit()

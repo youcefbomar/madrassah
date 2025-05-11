@@ -384,16 +384,14 @@ class MainPage(QWidget):
         
         accademic_levels= ["تحضيري","إبتدائي", "متوسط", "ثانوي","باكالوريا", "متعدد"]
 
-        name_layout = self.create_text_with_bar('اسم الأستاذ:',10)
-        age_layout = self.create_text_with_numbers('سنة الميلاد:', (1900,2100))
-        accademic_layout = self.create_text_with_dropdown('المادة :', accademic_years,-10)
-        accademic_level_layout = self.create_text_with_dropdown('مرحلة التدريس :', accademic_levels,-10)
-        phone_layout = self.create_text_with_bar('رقم الهاتف:',18)
-        location_layout = self.create_text_with_bar('الإقامة:',30)
+        name_layout, name_widget = self.create_text_with_bar('اسم الأستاذ:',10)
+        accademic_layout, accademic_widget = self.create_text_with_dropdown('المادة :', accademic_years,-10)
+        accademic_level_layout, accademic_level_widget = self.create_text_with_dropdown('مرحلة التدريس :', accademic_levels,-10)
+        phone_layout, phone_widget = self.create_text_with_bar('رقم الهاتف:',18)
+        location_layout, location_widget = self.create_text_with_bar('الإقامة:',30)
     
 
         layout.addLayout(name_layout)
-        layout.addLayout(age_layout)
         layout.addLayout(phone_layout)
         layout.addLayout(accademic_layout)
         layout.addLayout(accademic_level_layout)
@@ -407,6 +405,8 @@ class MainPage(QWidget):
         save_button = QPushButton("أضف")
         save_button.setObjectName("add_button")
         save_button.setCursor(QCursor(Qt.PointingHandCursor))
+        save_button.clicked.connect(lambda: (add_row_in_tables_teachers(self, [name_widget.text(), accademic_level_widget.currentText(), accademic_widget.currentText(), phone_widget.text(), location_widget.text()]), dialog.close()))
+
 
         cancel_button = QPushButton("إلغاء")
         cancel_button.setObjectName("cancel_button")
@@ -847,7 +847,7 @@ class MainPage(QWidget):
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
 
-        table_labels = ['الإسم', 'تاريخ الميلاد', 'المادة', 'رقم الهاتف', 'الاقامة']
+        table_labels = ['الإسم', 'سنة التدريس', 'المادة', 'رقم الهاتف', 'الاقامة']
         page_layout.addWidget(self.table_creator(table_labels, True, returning_teachers_table()))
         page_layout.setSpacing(25)
 
