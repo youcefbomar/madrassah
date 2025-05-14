@@ -1,10 +1,11 @@
 from database import *
 from PySide6.QtWidgets import QTableWidgetItem
 
-
+"""
 def payment_id_changer(payments_list) :
     conn = sqlite3.connect('my_database.db')
     cursor = conn.cursor()
+    
     for row_number, row in enumerate(payments_list) :
         enrollment_id = row[1]
         
@@ -30,7 +31,7 @@ def payment_id_changer(payments_list) :
 
 
     return payments_list
-
+"""
 
 
 
@@ -151,6 +152,7 @@ def returning_payments_table():
             rows.append(user)
 
         rows = payment_id_changer(rows)
+        print(rows)
     except:
         pass
 
@@ -171,7 +173,14 @@ def returning_classes_table():
 
         for user in users:
 
+            period= f"{user[4]} - {user[5]}"
+
+            del user[4]
+            del user[4]
+            user.insert(4, period)
+            
             rows.append(user)
+            
 
         rows = classes_id_changer(rows)
 
@@ -232,7 +241,7 @@ def add_row_in_tables_quick_payment(window, list_of_settings):
 
     #u wont believe how much i spent for those 4 lines, I almost pulled the trigger
     #-------------saves in database--------------
-    add_payment(1, list_of_settings[2], list_of_settings[3], list_of_settings[4], list_of_settings[5])
+    add_payment(1, 1, list_of_settings[2], list_of_settings[3], list_of_settings[4])
     #--------------------------------------------
 
     #-------------refresh the payment page--------------
@@ -290,8 +299,27 @@ def add_row_in_tables_classes(window, list_of_settings):
 
 
 
+def add_row_in_tables_payments(window, list_of_settings):
+
+    #-------------saves in database--------------
+    try :
+        print(list_of_settings)
+        add_payment(list_of_settings[0], list_of_settings[1], list_of_settings[2], list_of_settings[3], list_of_settings[4])
+    except :
+        creating_all_tables()
+        add_payment(list_of_settings[0], list_of_settings[1], list_of_settings[2], list_of_settings[3], list_of_settings[4])
+
+    #--------------------------------------------
+
+    #-------------refresh the payment page--------------
+    new_page = window.payments_page()
+    window.stacked_widget.removeWidget(window.stacked_widget.widget(4))
+    window.stacked_widget.insertWidget(4, new_page)
+    #---------------------------------------------------
+
+
 if __name__ == "__main__" :
     
-    print('asdadsa')
+    returning_payments_table()
 
 

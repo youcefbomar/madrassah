@@ -524,9 +524,9 @@ class MainPage(QWidget):
         #------------------------- Text Bars -----------------------------
         teacher_name_layout = self.create_text_with_button('الحصة :','إختر الحصة', lambda:self.all_classes_window() )
         student_name_layout = self.create_text_with_button('التلميذ :','إختر التلميذ', lambda:self.all_students_window())
-        price_layout = self.create_text_with_numbers('المبلغ:', (0,1000000))
-        date_layout = self.create_text_with_bar('التاريخ :',10)
-        status_layout = self.create_text_with_bar('الحالة :',10)
+        price_layout, price_widget = self.create_text_with_numbers('المبلغ:', (0,1000000))
+        date_layout, date_widget = self.create_text_with_bar('التاريخ :',10)
+        status_layout, status_widget = self.create_text_with_dropdown('الحالة :', ['مدفوع', 'غير مدفوع'], 10)
     
 
         layout.addLayout(teacher_name_layout)
@@ -543,6 +543,8 @@ class MainPage(QWidget):
         save_button = QPushButton("أضف")
         save_button.setObjectName("add_button")
         save_button.setCursor(QCursor(Qt.PointingHandCursor))
+        save_button.clicked.connect(lambda: (add_row_in_tables_payments(self, [1, 1, price_widget.value(), date_widget.text(), status_widget.currentText()]), dialog.close()))
+
 
         cancel_button = QPushButton("إلغاء")
         cancel_button.setObjectName("cancel_button")
@@ -595,7 +597,7 @@ class MainPage(QWidget):
         save_button = QPushButton("أضف")
         save_button.setObjectName("add_button")
         save_button.setCursor(QCursor(Qt.PointingHandCursor))
-        save_button.clicked.connect(lambda: (add_row_in_tables_quick_payment(self, ['بوسعيد آدم', 'حمزة غراسي', price_widget.value(), '20/11/2005', 'march', status_widget.currentText()]), dialog.close()))
+        save_button.clicked.connect(lambda: (add_row_in_tables_quick_payment(self, ['بوسعيد آدم', 'حمزة غراسي', price_widget.value(), '20/11/2005', status_widget.currentText()]), dialog.close()))
 
         cancel_button = QPushButton("إلغاء")
         cancel_button.setObjectName("cancel_button")
@@ -800,7 +802,7 @@ class MainPage(QWidget):
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
 
-        table_labels = ['إسم التلميذ', 'إسم الأستاذ', 'الكمية', 'التاريخ', 'الشهر', 'الحالة']
+        table_labels = ['إسم التلميذ', 'إسم الأستاذ', 'الكمية', 'التاريخ', 'الحالة']
         self.payments_page_table = self.table_creator(table_labels, True, returning_payments_table())
         page_layout.addWidget(self.payments_page_table)
         page_layout.setSpacing(25)
@@ -827,7 +829,7 @@ class MainPage(QWidget):
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
 
-        table_labels = ['الأستاذ', 'المادة', 'الفترة', 'السنة الدراسية' ,'الحجرة' ,'السعر' ,'نسبة الأستاذ']
+        table_labels = ['الأستاذ', 'المادة', 'السنة الدراسية', 'الفترة', 'السعر' ,'نسبة الأستاذ']
         page_layout.addWidget(self.table_creator(table_labels, True, returning_classes_table()))
         page_layout.setSpacing(25)
 

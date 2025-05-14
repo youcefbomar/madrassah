@@ -98,10 +98,10 @@ def creates_payments_table ():
     CREATE TABLE IF NOT EXISTS payments(
 
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        enrollment_id INTEGER NOT NULL,
+        student_id INT NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+        classe_id INT NOT NULL REFERENCES classe(id) ON DELETE CASCADE,
         amount INT NOT NULL,
         marked_date DATE,
-        time_method VARCHAR(50), 
         status TEXT
 
     )
@@ -160,11 +160,11 @@ def add_enrollment(student_id , classe_id, subscription_date):
 
 
 
-def add_payment(enrollment_id, amount, marked_date, mounth, status):
+def add_payment(student_id, classe_id, amount, marked_date, status):
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO payments(enrollment_id, amount, marked_date, time_method, status) VALUES (?, ?, ?, ?, ?)", (enrollment_id, amount, marked_date, mounth, status))
+    cursor.execute("INSERT INTO payments(student_id, classe_id, amount, marked_date, status) VALUES (?, ?, ?, ?, ?)", (student_id, classe_id, amount, marked_date, status))
 
 
     conn.commit()
@@ -188,6 +188,5 @@ if __name__ == "__main__":
     for i in range(20): 
 
         
-        add_classe(1, 'رياضيات', '8:30 - 10:00', 'اولى متوسط','حي قصر الماء','3000','20')
         add_enrollment(1,1,'20/11/2005')
 
