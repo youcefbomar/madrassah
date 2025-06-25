@@ -979,7 +979,7 @@ class MainPage(QWidget):
 
 
         dashbord_layout = QHBoxLayout(self)
-        self.setMinimumSize(1200,800)
+        self.setMinimumSize(1200,600)
 
         # ---------------------------Sidebar---------------------------
         sidebar = QFrame()

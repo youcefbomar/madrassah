@@ -177,16 +177,18 @@ def add_payment(student_id, classe_id, amount, marked_date, status):
 
 
 if __name__ == "__main__":
-    for i in range(6): 
+    conn = sqlite3.connect('my_database.db')  # Use .db file or ":memory:" for RAM
 
-        add_teacher('حمزة غراسي', '1990', 'فيزياء', '066988557', 'الخربة')
+    # Create a cursor to execute SQL
+    cursor = conn.cursor()
 
-    for i in range(30): 
+    # Replace 'your_table' with your actual table name
+    cursor.execute("SELECT * FROM teachers")
 
-        add_student('بوطواطو يوسف', '2005', '066988557', 'ثاني ثانوي','حي قصر الماء')
+    # Fetch all rows
+    rows = cursor.fetchall()
 
-    for i in range(20): 
-
-        
-        add_enrollment(1,1,'20/11/2005')
+    # Print each row
+    for row in rows:
+        print(row)
 
