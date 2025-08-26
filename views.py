@@ -210,6 +210,7 @@ class MainPage(QWidget):
         self.add_teacher_id = None
         def add_teacher_id_changer(teacher_id):
                 self.add_teacher_id = teacher_id
+                print(teacher_id)
                 dialog.close()
                 
 
@@ -226,7 +227,7 @@ class MainPage(QWidget):
 
             teacher_name = teacher_information[1]
             teacher_profession = teacher_information[3]
-            scroll_layout.addWidget(self.payment_card_maker(teacher_name, teacher_profession, 'إختر', lambda tid=teacher_information[0] : add_teacher_id_changer(tid)))
+            scroll_layout.addWidget(self.payment_card_maker(teacher_name, teacher_profession, 'إختر', lambda _, tid=teacher_information[0] : add_teacher_id_changer(tid)))
 
         scroll_layout.setAlignment(Qt.AlignTop)
 
@@ -265,7 +266,7 @@ class MainPage(QWidget):
         for student_information in returning_students_table():
             student_name = student_information[1]
             student_profession = student_information[4]
-            scroll_layout.addWidget(self.payment_card_maker(student_name, student_profession, 'إختر', lambda sid=student_information[0]: add_student_id_changer(sid)))
+            scroll_layout.addWidget(self.payment_card_maker(student_name, student_profession, 'إختر', lambda _, sid=student_information[0]: add_student_id_changer(sid)))
 
         scroll_layout.setAlignment(Qt.AlignTop)
         

@@ -180,7 +180,7 @@ if __name__ == "__main__":
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM payments")
+    cursor.execute("SELECT * FROM teachers")
     rows = cursor.fetchall()
 
     print("📌 Contents of payment table:")

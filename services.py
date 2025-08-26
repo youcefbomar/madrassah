@@ -7,12 +7,15 @@ def payment_id_changer(payments_list) :
         cursor = conn.cursor()
         
         for row_number, row in enumerate(payments_list) :
-    
+            
+            
             student_id = row[1]
             classe_id = row[2]
-    
+            
+
             cursor.execute("SELECT * FROM classes WHERE id = ?", (classe_id,))
             classe = cursor.fetchone()
+            print(classe)
     
             cursor.execute("SELECT * FROM students WHERE id = ?", (student_id,))
             student = cursor.fetchone()
@@ -26,7 +29,7 @@ def payment_id_changer(payments_list) :
             payments_list[row_number][2] = (teacher_name)
 
     except Exception as e:
-        print("Error")
+        print("here is the Error: ", e)
 
     finally:
         if 'conn' in locals():
@@ -324,6 +327,31 @@ def add_row_in_tables_payments(window, list_of_settings):
     window.stacked_widget.setCurrentIndex(4)
     #---------------------------------------------------
 
+#window, 
+def searching_in_students(search_text):
+    rows = []
+    #-------------search in database--------------
+    conn = sqlite3.connect("my_database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM students WHERE name LIKE ?", ('%' + search_text + '%',))
+    results = cursor.fetchall()
+
+    conn.close()
+
+    for result in results:
+            rows.append(result)
+    return rows
+
+    #--------------------------------------------
+
+    #-------------refresh the payment page--------------
+
+    new_page = window.students_page()
+    window.stacked_widget.removeWidget(window.stacked_widget.widget(1))
+    window.stacked_widget.insertWidget(1, new_page)
+    window.stacked_widget.setCurrentIndex(1)
+    #---------------------------------------------------
 
 
 def today_payments() :
@@ -336,4 +364,4 @@ def today_payments() :
 
 if __name__ == "__main__" :
     
-    today_payments()
+    print(searching_in_students("abdu"))
