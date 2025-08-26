@@ -181,6 +181,7 @@ QHeaderView::section {
 QTableWidget::item {
     padding: 5px;
     background: #1f3142;
+    color: #ffffffff;
 }
 QTableWidget::item:selected {
     background-color: #3a5268;

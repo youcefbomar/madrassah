@@ -201,11 +201,17 @@ class MainPage(QWidget):
 
 
 
-    def all_techers_window(self):
+    def all_teachers_window(self):
+        
         dialog = QDialog(self)
         dialog.setWindowTitle("قائمة الأساتذة")
         dialog.setGeometry(50, 50, 600, 450)
 
+        self.add_teacher_id = None
+        def add_teacher_id_changer(teacher_id):
+                self.add_teacher_id = teacher_id
+                dialog.close()
+                
 
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
@@ -216,9 +222,11 @@ class MainPage(QWidget):
         scroll_layout = QVBoxLayout(scroll_widget)
 
         for teacher_information in returning_teachers_table():
+            
+
             teacher_name = teacher_information[1]
             teacher_profession = teacher_information[3]
-            scroll_layout.addWidget(self.payment_card_maker(teacher_name, teacher_profession, 'إختر'))
+            scroll_layout.addWidget(self.payment_card_maker(teacher_name, teacher_profession, 'إختر', lambda tid=teacher_information[0] : add_teacher_id_changer(tid)))
 
         scroll_layout.setAlignment(Qt.AlignTop)
 
@@ -238,6 +246,12 @@ class MainPage(QWidget):
         dialog.setWindowTitle("قائمة التلاميذ")
         dialog.setGeometry(50, 50, 700, 450)
 
+        self.add_student_id = None
+
+        def add_student_id_changer(student_id):
+                self.add_student_id = student_id
+                dialog.close()
+
 
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
@@ -248,10 +262,10 @@ class MainPage(QWidget):
         scroll_widget = QWidget()
         scroll_layout = QVBoxLayout(scroll_widget)
 
-        for teacher_information in returning_students_table():
-            teacher_name = teacher_information[1]
-            teacher_profession = teacher_information[4]
-            scroll_layout.addWidget(self.payment_card_maker(teacher_name, teacher_profession, 'إختر'))
+        for student_information in returning_students_table():
+            student_name = student_information[1]
+            student_profession = student_information[4]
+            scroll_layout.addWidget(self.payment_card_maker(student_name, student_profession, 'إختر', lambda sid=student_information[0]: add_student_id_changer(sid)))
 
         scroll_layout.setAlignment(Qt.AlignTop)
         
@@ -272,6 +286,13 @@ class MainPage(QWidget):
         dialog.setWindowTitle("قائمة التلاميذ")
         dialog.setGeometry(50, 50, 600, 450)
 
+        self.add_classe_id = None
+
+        def add_classe_id_changer(classe_id):
+                self.add_classe_id = classe_id
+                print(classe_id)
+                dialog.close()
+
 
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
@@ -286,7 +307,7 @@ class MainPage(QWidget):
             classe_material = classe_information[2]
             classe_time = classe_information[3]
 
-            scroll_layout.addWidget(self.payment_card_maker(teacher_name, f'{classe_material}   {classe_time}', 'إختر'))
+            scroll_layout.addWidget(self.payment_card_maker(teacher_name, f'{classe_material}   {classe_time}', 'إختر', lambda _, cid=classe_information[0]: add_classe_id_changer(cid)))
 
         scroll_layout.setAlignment(Qt.AlignTop)
 
@@ -459,7 +480,7 @@ class MainPage(QWidget):
 
         time_layout.addLayout(end_time_layout)
         time_layout.addLayout(start_time_layout)
-        teacher_name_layout = self.create_text_with_button('الأستاذ :', 'إختر الأستاذ', lambda:self.all_techers_window())
+        teacher_name_layout = self.create_text_with_button('الأستاذ :', 'إختر الأستاذ', lambda:self.all_teachers_window())
         accademic_subject_layout, accademic_material_widget = self.create_text_with_dropdown('المادة :', accademic_materials,10)
         accademic_level_layout, accademic_level_widget = self.create_text_with_dropdown('السنة الدراسية :', accademic_years,10)
         price_layout, price_widget = self.create_text_with_numbers('السعر :', (0,1000000))
@@ -481,7 +502,7 @@ class MainPage(QWidget):
         save_button = QPushButton("أضف")
         save_button.setObjectName("add_button")
         save_button.setCursor(QCursor(Qt.PointingHandCursor))
-        save_button.clicked.connect(lambda: (add_row_in_tables_classes(self, [1, accademic_material_widget.currentText(), accademic_level_widget.currentText(),
+        save_button.clicked.connect(lambda: (add_row_in_tables_classes(self, [self.add_teacher_id, accademic_material_widget.currentText(), accademic_level_widget.currentText(),
                                                                             start_time_widget.time().toString("HH:mm"), end_time_widget.time().toString("HH:mm"),
                                                                             price_widget.value(), percentage_widget.value()]), dialog.close()))
 
@@ -543,7 +564,7 @@ class MainPage(QWidget):
         save_button = QPushButton("أضف")
         save_button.setObjectName("add_button")
         save_button.setCursor(QCursor(Qt.PointingHandCursor))
-        save_button.clicked.connect(lambda: (add_row_in_tables_payments(self, [1, 1, price_widget.value(), date_widget.text(), status_widget.currentText()]), dialog.close()))
+        save_button.clicked.connect(lambda: (add_row_in_tables_payments(self, [self.add_student_id, self.add_classe_id, price_widget.value(), date_widget.text(), status_widget.currentText()]), dialog.close()))
 
 
         cancel_button = QPushButton("إلغاء")

@@ -177,18 +177,15 @@ def add_payment(student_id, classe_id, amount, marked_date, status):
 
 
 if __name__ == "__main__":
-    conn = sqlite3.connect('my_database.db')  # Use .db file or ":memory:" for RAM
-
-    # Create a cursor to execute SQL
+    conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
 
-    # Replace 'your_table' with your actual table name
-    cursor.execute("SELECT * FROM teachers")
-
-    # Fetch all rows
+    cursor.execute("SELECT * FROM payments")
     rows = cursor.fetchall()
 
-    # Print each row
+    print("📌 Contents of payment table:")
     for row in rows:
         print(row)
+
+    conn.close()
 
