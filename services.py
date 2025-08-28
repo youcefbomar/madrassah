@@ -15,7 +15,6 @@ def payment_id_changer(payments_list) :
 
             cursor.execute("SELECT * FROM classes WHERE id = ?", (classe_id,))
             classe = cursor.fetchone()
-            print(classe)
     
             cursor.execute("SELECT * FROM students WHERE id = ?", (student_id,))
             student = cursor.fetchone()
@@ -327,30 +326,36 @@ def add_row_in_tables_payments(window, list_of_settings):
     window.stacked_widget.setCurrentIndex(4)
     #---------------------------------------------------
 
-#window, 
-def searching_in_students(search_text):
+# 
+def searching(window, search_text, where_to_search):
     rows = []
     #-------------search in database--------------
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
+    cursor.execute("SELECT * FROM "+ where_to_search+ " WHERE name LIKE ?", ('%' + search_text + '%',))
 
-    cursor.execute("SELECT * FROM students WHERE name LIKE ?", ('%' + search_text + '%',))
     results = cursor.fetchall()
 
     conn.close()
 
     for result in results:
             rows.append(result)
-    return rows
 
     #--------------------------------------------
 
     #-------------refresh the payment page--------------
+    if where_to_search == "students" :
+        new_page = window.students_page(rows)
+        window.stacked_widget.removeWidget(window.stacked_widget.widget(1))
+        window.stacked_widget.insertWidget(1, new_page)
+        window.stacked_widget.setCurrentIndex(1)
 
-    new_page = window.students_page()
-    window.stacked_widget.removeWidget(window.stacked_widget.widget(1))
-    window.stacked_widget.insertWidget(1, new_page)
-    window.stacked_widget.setCurrentIndex(1)
+    elif where_to_search == "teachers" :
+        new_page = window.teachers_page(rows)
+        window.stacked_widget.removeWidget(window.stacked_widget.widget(2))
+        window.stacked_widget.insertWidget(2, new_page)
+        window.stacked_widget.setCurrentIndex(2)
+    
     #---------------------------------------------------
 
 

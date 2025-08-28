@@ -709,7 +709,7 @@ class MainPage(QWidget):
         dialog.exec()
 
          
-    def search_bar_maker(self, search_action=None, add_action=None, add_button = True):
+    def search_bar_maker(self, what_to_search=None, add_action=None, add_button = True):
 
         search_bar = QWidget()
         search_bar.setMinimumSize(300,80)
@@ -727,12 +727,13 @@ class MainPage(QWidget):
 
         layout.addWidget(bar)
 
-        
+
+
         search_button = QPushButton('بحث')
         search_button.setObjectName('search_button')
         search_button.setMaximumSize(200,40)
         search_button.setCursor(QCursor(Qt.PointingHandCursor))
-        search_button.clicked.connect(search_action)
+        search_button.clicked.connect(lambda : searching(self, bar.text(), what_to_search))
 
 
         layout.addWidget(search_button)
@@ -889,7 +890,7 @@ class MainPage(QWidget):
 
 
 
-    def students_page(self):
+    def students_page(self, table_content= returning_students_table()):
 
         container = QWidget()
         page_layout= QVBoxLayout(container) 
@@ -900,13 +901,13 @@ class MainPage(QWidget):
         page_layout.addLayout(cards_layout)
 
         #--------- cards ----------------------------------
-        search_bar = self.search_bar_maker(None,lambda: self.add_student_window())
+        search_bar = self.search_bar_maker("students",lambda: self.add_student_window())
         
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
 
         table_labels = ['الإسم', 'تاريخ الميلاد', 'رقم الهاتف', 'السنة الدراسية', 'الإقامة']
-        page_layout.addWidget(self.table_creator(table_labels, True, returning_students_table()))
+        page_layout.addWidget(self.table_creator(table_labels, True, table_content))
         page_layout.setSpacing(25)
 
 
