@@ -836,7 +836,7 @@ class MainPage(QWidget):
         return container
 
 
-    def courses_page(self):
+    def courses_page(self, table_content= returning_classes_table()):
 
         container = QWidget()
         page_layout= QVBoxLayout(container) 
@@ -847,13 +847,13 @@ class MainPage(QWidget):
         page_layout.addLayout(cards_layout)
 
         #--------- cards ----------------------------------
-        search_bar = self.search_bar_maker(None,lambda: self.add_course_window())
+        search_bar = self.search_bar_maker("classes",lambda: self.add_course_window())
         
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
 
         table_labels = ['الأستاذ', 'المادة', 'السنة الدراسية', 'الفترة', 'السعر' ,'نسبة الأستاذ']
-        page_layout.addWidget(self.table_creator(table_labels, True, returning_classes_table()))
+        page_layout.addWidget(self.table_creator(table_labels, True, table_content))
         page_layout.setSpacing(25)
 
         page_layout.setAlignment(Qt.AlignTop)
@@ -863,7 +863,7 @@ class MainPage(QWidget):
 
 
 
-    def teachers_page(self):
+    def teachers_page(self, table_content= returning_teachers_table()):
 
         container = QWidget()
         page_layout= QVBoxLayout(container) 
@@ -874,13 +874,13 @@ class MainPage(QWidget):
         page_layout.addLayout(cards_layout)
 
         #--------- cards ----------------------------------
-        search_bar = self.search_bar_maker(None,lambda: self.add_teacher_window())
+        search_bar = self.search_bar_maker("teachers", lambda: self.add_teacher_window())
         
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
 
         table_labels = ['الإسم', 'سنة التدريس', 'المادة', 'رقم الهاتف', 'الاقامة']
-        page_layout.addWidget(self.table_creator(table_labels, True, returning_teachers_table()))
+        page_layout.addWidget(self.table_creator(table_labels, True, table_content))
         page_layout.setSpacing(25)
 
         page_layout.setAlignment(Qt.AlignTop)
