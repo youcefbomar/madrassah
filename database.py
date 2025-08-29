@@ -78,7 +78,7 @@ def creates_enrollment_table ():
 
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         student_id INT NOT NULL REFERENCES students(id) ON DELETE CASCADE,
-        classe_id INT NOT NULL REFERENCES classe(id) ON DELETE CASCADE,
+        classe_id INT NOT NULL REFERENCES classes(id) ON DELETE CASCADE,
         subscription_date DATE
 
     )

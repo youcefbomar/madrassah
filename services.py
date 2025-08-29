@@ -329,9 +329,20 @@ def add_row_in_tables_payments(window, list_of_settings):
 # 
 def searching(window, search_text, where_to_search):
     rows= []
+    what_page_to_refrech = where_to_search
+    if "all_" in where_to_search :
+        where_to_search = where_to_search.replace("all_", "")
+
+    where_to_search
+
     if where_to_search == "classes" :
         
         for row in returning_classes_table() :
+            if any(search_text.lower() in str(value).lower() for value in row):
+                rows.append(row)
+
+    elif where_to_search== "payments" :
+        for row in returning_payments_table() :
             if any(search_text.lower() in str(value).lower() for value in row):
                 rows.append(row)
 
@@ -349,7 +360,7 @@ def searching(window, search_text, where_to_search):
         cursor.execute(query, params)
         rows = cursor.fetchall()
 
-    refreshing_page_after_search(window, where_to_search, rows)
+    refreshing_page_after_search(window, what_page_to_refrech, rows)
 
 
 
@@ -376,6 +387,13 @@ def refreshing_page_after_search(window, where_to_search, rows) :
         window.stacked_widget.removeWidget(window.stacked_widget.widget(3))
         window.stacked_widget.insertWidget(3, new_page)
         window.stacked_widget.setCurrentIndex(3)
+    
+    elif where_to_search == "payments" :
+
+        new_page = window.payments_page(rows)
+        window.stacked_widget.removeWidget(window.stacked_widget.widget(4))
+        window.stacked_widget.insertWidget(4, new_page)
+        window.stacked_widget.setCurrentIndex(4)
     
     #---------------------------------------------------
 

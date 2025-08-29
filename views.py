@@ -201,7 +201,7 @@ class MainPage(QWidget):
 
 
 
-    def all_teachers_window(self):
+    def all_teachers_window(self, content= returning_teachers_table()):
         
         dialog = QDialog(self)
         dialog.setWindowTitle("قائمة الأساتذة")
@@ -210,7 +210,6 @@ class MainPage(QWidget):
         self.add_teacher_id = None
         def add_teacher_id_changer(teacher_id):
                 self.add_teacher_id = teacher_id
-                print(teacher_id)
                 dialog.close()
                 
 
@@ -222,9 +221,8 @@ class MainPage(QWidget):
         scroll_widget = QWidget()
         scroll_layout = QVBoxLayout(scroll_widget)
 
-        for teacher_information in returning_teachers_table():
+        for teacher_information in content:
             
-
             teacher_name = teacher_information[1]
             teacher_profession = teacher_information[3]
             scroll_layout.addWidget(self.payment_card_maker(teacher_name, teacher_profession, 'إختر', lambda _, tid=teacher_information[0] : add_teacher_id_changer(tid)))
@@ -234,7 +232,7 @@ class MainPage(QWidget):
         scroll_area.setWidget(scroll_widget)
         
         layout = QVBoxLayout(dialog)
-        layout.addWidget(self.search_bar_maker(None, None, False))
+        layout.addWidget(self.search_bar_maker("all_teachers", None, False))
         layout.addWidget(scroll_area)
         
 
@@ -809,7 +807,7 @@ class MainPage(QWidget):
         return container
 
 
-    def payments_page(self):
+    def payments_page(self, table_content= returning_payments_table()):
 
         container = QWidget()
         page_layout= QVBoxLayout(container) 
@@ -820,13 +818,13 @@ class MainPage(QWidget):
         page_layout.addLayout(cards_layout)
 
         #--------- cards ----------------------------------
-        search_bar = self.search_bar_maker(None,lambda: self.add_payment_window())
+        search_bar = self.search_bar_maker("payments",lambda: self.add_payment_window())
         
         cards_layout.addWidget(search_bar)
         #--------------------------------------------------
 
         table_labels = ['إسم التلميذ', 'إسم الأستاذ', 'الكمية', 'التاريخ', 'الحالة']
-        self.payments_page_table = self.table_creator(table_labels, True, returning_payments_table())
+        self.payments_page_table = self.table_creator(table_labels, True, table_content)
         page_layout.addWidget(self.payments_page_table)
         page_layout.setSpacing(25)
 
