@@ -330,10 +330,10 @@ def add_row_in_tables_payments(window, list_of_settings):
 def searching(window, search_text, where_to_search):
     rows= []
     what_page_to_refrech = where_to_search
+
     if "all_" in where_to_search :
         where_to_search = where_to_search.replace("all_", "")
 
-    where_to_search
 
     if where_to_search == "classes" :
         
@@ -394,6 +394,18 @@ def refreshing_page_after_search(window, where_to_search, rows) :
         window.stacked_widget.removeWidget(window.stacked_widget.widget(4))
         window.stacked_widget.insertWidget(4, new_page)
         window.stacked_widget.setCurrentIndex(4)
+
+    elif where_to_search== "all_teachers" :
+        window.dialog.close()
+        window.all_teachers_window(rows)
+    
+    elif where_to_search== "all_students" :
+        window.dialog.close()
+        window.all_students_window(rows)
+
+    elif where_to_search== "all_classes":
+        window.dialog.close()
+        window.all_classes_window(rows)
     
     #---------------------------------------------------
 

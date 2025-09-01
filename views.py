@@ -203,14 +203,14 @@ class MainPage(QWidget):
 
     def all_teachers_window(self, content= returning_teachers_table()):
         
-        dialog = QDialog(self)
-        dialog.setWindowTitle("قائمة الأساتذة")
-        dialog.setGeometry(50, 50, 600, 450)
+        self.dialog = QDialog(self)
+        self.dialog.setWindowTitle("قائمة الأساتذة")
+        self.dialog.setGeometry(50, 50, 600, 450)
 
         self.add_teacher_id = None
         def add_teacher_id_changer(teacher_id):
                 self.add_teacher_id = teacher_id
-                dialog.close()
+                self.dialog.close()
                 
 
         scroll_area = QScrollArea()
@@ -231,25 +231,25 @@ class MainPage(QWidget):
 
         scroll_area.setWidget(scroll_widget)
         
-        layout = QVBoxLayout(dialog)
+        layout = QVBoxLayout(self.dialog)
         layout.addWidget(self.search_bar_maker("all_teachers", None, False))
         layout.addWidget(scroll_area)
         
 
-        dialog.setModal(True)
-        dialog.exec()
+        self.dialog.setModal(True)
+        self.dialog.exec()
 
 
-    def all_students_window(self):
-        dialog = QDialog(self)
-        dialog.setWindowTitle("قائمة التلاميذ")
-        dialog.setGeometry(50, 50, 700, 450)
+    def all_students_window(self, content= returning_students_table()):
+        self.dialog = QDialog(self)
+        self.dialog.setWindowTitle("قائمة التلاميذ")
+        self.dialog.setGeometry(50, 50, 700, 450)
 
         self.add_student_id = None
 
         def add_student_id_changer(student_id):
                 self.add_student_id = student_id
-                dialog.close()
+                self.dialog.close()
 
 
         scroll_area = QScrollArea()
@@ -261,7 +261,7 @@ class MainPage(QWidget):
         scroll_widget = QWidget()
         scroll_layout = QVBoxLayout(scroll_widget)
 
-        for student_information in returning_students_table():
+        for student_information in content:
             student_name = student_information[1]
             student_profession = student_information[4]
             scroll_layout.addWidget(self.payment_card_maker(student_name, student_profession, 'إختر', lambda _, sid=student_information[0]: add_student_id_changer(sid)))
@@ -270,27 +270,27 @@ class MainPage(QWidget):
         
         scroll_area.setWidget(scroll_widget)
 
-        layout = QVBoxLayout(dialog)
-        layout.addWidget(self.search_bar_maker(None, None, False))
+        layout = QVBoxLayout(self.dialog)
+        layout.addWidget(self.search_bar_maker("all_students", None, False))
         layout.addWidget(scroll_area)
         
 
-        dialog.setModal(True)
-        dialog.exec()
+        self.dialog.setModal(True)
+        self.dialog.exec()
 
 
 
-    def all_classes_window(self):
-        dialog = QDialog(self)
-        dialog.setWindowTitle("قائمة التلاميذ")
-        dialog.setGeometry(50, 50, 600, 450)
+    def all_classes_window(self, content= returning_classes_table()):
+        self.dialog = QDialog(self)
+        self.dialog.setWindowTitle("قائمة التلاميذ")
+        self.dialog.setGeometry(50, 50, 600, 450)
 
         self.add_classe_id = None
 
         def add_classe_id_changer(classe_id):
                 self.add_classe_id = classe_id
                 print(classe_id)
-                dialog.close()
+                self.dialog.close()
 
 
         scroll_area = QScrollArea()
@@ -301,7 +301,7 @@ class MainPage(QWidget):
         scroll_widget = QWidget()
         scroll_layout = QVBoxLayout(scroll_widget)
 
-        for classe_information in returning_classes_table():
+        for classe_information in content:
             teacher_name = classe_information[1]
             classe_material = classe_information[2]
             classe_time = classe_information[3]
@@ -312,13 +312,13 @@ class MainPage(QWidget):
 
         scroll_area.setWidget(scroll_widget)
 
-        layout = QVBoxLayout(dialog)
-        layout.addWidget(self.search_bar_maker(None, None, False))
+        layout = QVBoxLayout(self.dialog)
+        layout.addWidget(self.search_bar_maker("all_classes", None, False))
         layout.addWidget(scroll_area)
         
 
-        dialog.setModal(True)
-        dialog.exec()
+        self.dialog.setModal(True)
+        self.dialog.exec()
 
 
     def add_student_window(self) :
