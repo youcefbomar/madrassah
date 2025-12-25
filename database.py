@@ -34,9 +34,9 @@ def creates_teachers_table() :
 
         id INTEGER PRIMARY KEY AUTOINCREMENT ,
         name VARCHAR(50) NOT NULL,
-        date_of_birth DATE NOT NULL,
+        accademic_year VARCHAR(50) NOT NULL,
         subject VARCHAR(50),
-        phone_number VARCHAR(10) NOT NULL,
+        phone_number VARCHAR(50) NOT NULL,
         residance VARCHAR(50)
     )
     """)
@@ -57,8 +57,8 @@ def creates_classes_table ():
         teacher_id INT NOT NULL REFERENCES teachers(id) ON DELETE CASCADE,
         subject VARCHAR(50) NOT NULL,
         academic_year VARCHAR(50),
-        room VARCHAR(50) NOT NULL,
-        period VARCHAR(50) NOT NULL,
+        start_time VARCHAR(50) NOT NULL,
+        end_time VARCHAR(50) NOT NULL,
         price INT NOT NULL,
         teacher_percentage INT NOT NULL
     )
@@ -78,7 +78,7 @@ def creates_enrollment_table ():
 
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         student_id INT NOT NULL REFERENCES students(id) ON DELETE CASCADE,
-        classe_id INT NOT NULL REFERENCES classe(id) ON DELETE CASCADE,
+        classe_id INT NOT NULL REFERENCES classes(id) ON DELETE CASCADE,
         subscription_date DATE
 
     )
@@ -98,10 +98,10 @@ def creates_payments_table ():
     CREATE TABLE IF NOT EXISTS payments(
 
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        enrollment_id INTEGER NOT NULL,
+        student_id INT NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+        classe_id INT NOT NULL REFERENCES classe(id) ON DELETE CASCADE,
         amount INT NOT NULL,
         marked_date DATE,
-        time_method VARCHAR(50), 
         status TEXT
 
     )
@@ -125,22 +125,22 @@ def add_student(name, date_of_birth, phone_number, academic_year, residance):
     cursor.close()
 
 
-def add_teacher(name, date_of_birth, subject, phone_number, residance):
+def add_teacher(name, accademic_year, subject, phone_number, residance):
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO teachers (name, date_of_birth, subject, phone_number, residance) VALUES (?, ?, ?, ?, ?)", (name, date_of_birth, subject, phone_number, residance))
+    cursor.execute("INSERT INTO teachers (name, accademic_year, subject, phone_number, residance) VALUES (?, ?, ?, ?, ?)", (name, accademic_year, subject, phone_number, residance))
 
 
     conn.commit()
     cursor.close()
 
 
-def add_classe(teacher_id , subject, academic_year, room, period, price, teacher_percentage):
+def add_classe(teacher_id , subject, academic_year, start_time, end_time, price, teacher_percentage):
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO classes (teacher_id , subject, academic_year, room, period, price, teacher_percentage) VALUES (?, ?, ?, ?, ?, ?, ?)", (teacher_id , subject, academic_year, room, period, price, teacher_percentage))
+    cursor.execute("INSERT INTO classes (teacher_id , subject, academic_year, start_time, end_time, price, teacher_percentage) VALUES (?, ?, ?, ?, ?, ?, ?)", (teacher_id , subject, academic_year, start_time, end_time, price, teacher_percentage))
 
 
     conn.commit()
@@ -160,11 +160,11 @@ def add_enrollment(student_id , classe_id, subscription_date):
 
 
 
-def add_payment(enrollment_id, amount, marked_date, mounth, status):
+def add_payment(student_id, classe_id, amount, marked_date, status):
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO payments(enrollment_id, amount, marked_date, time_method, status) VALUES (?, ?, ?, ?, ?)", (enrollment_id, amount, marked_date, mounth, status))
+    cursor.execute("INSERT INTO payments(student_id, classe_id, amount, marked_date, status) VALUES (?, ?, ?, ?, ?)", (student_id, classe_id, amount, marked_date, status))
 
 
     conn.commit()
@@ -177,17 +177,15 @@ def add_payment(enrollment_id, amount, marked_date, mounth, status):
 
 
 if __name__ == "__main__":
-    for i in range(66): 
+    conn = sqlite3.connect("my_database.db")
+    cursor = conn.cursor()
 
-        add_teacher('حمزة غراسي', '1990', 'فيزياء', '066988557', 'الخربة')
+    cursor.execute("SELECT * FROM teachers")
+    rows = cursor.fetchall()
 
-    for i in range(300): 
+    print("📌 Contents of payment table:")
+    for row in rows:
+        print(row)
 
-        add_student('بوطواطو يوسف', '2005', '066988557', 'ثاني ثانوي','حي قصر الماء')
+    conn.close()
 
-    for i in range(20): 
-
-        
-        add_classe(1, 'رياضيات', '8:30 - 10:00', 'اولى متوسط','حي قصر الماء','3000','20')
-        add_enrollment(1,1,'20/11/2005')
-        add_payment(1,1000,'20/11/2005','مارس','مدفوع')
