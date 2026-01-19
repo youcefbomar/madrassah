@@ -320,7 +320,7 @@ def add_row_in_tables_payments(window, list_of_settings):
     #--------------------------------------------
 
     #-------------refresh the payment page--------------
-    new_page = window.payments_page()
+    new_page = window.payments_page(returning_payments_table())
     window.stacked_widget.removeWidget(window.stacked_widget.widget(4))
     window.stacked_widget.insertWidget(4, new_page)
     window.stacked_widget.setCurrentIndex(4)
