@@ -251,7 +251,7 @@ def add_row_in_tables_quick_payment(window, list_of_settings):
     #--------------------------------------------
 
     #-------------refresh the payment page--------------
-    new_page = window.payments_page()
+    new_page = window.payments_page(returning_payments_table())
     window.stacked_widget.removeWidget(window.stacked_widget.widget(4))
     window.stacked_widget.insertWidget(4, new_page)
     #---------------------------------------------------
@@ -264,8 +264,8 @@ def add_row_in_tables_students(window, list_of_settings):
     add_student(list_of_settings[0], list_of_settings[1], list_of_settings[2], list_of_settings[3], list_of_settings[4])
     #--------------------------------------------
 
-    #-------------refresh the payment page--------------
-    new_page = window.students_page()
+    #-------------refresh the students page--------------
+    new_page = window.students_page(returning_students_table())
     window.stacked_widget.removeWidget(window.stacked_widget.widget(1))
     window.stacked_widget.insertWidget(1, new_page)
     window.stacked_widget.setCurrentIndex(1)
@@ -279,8 +279,8 @@ def add_row_in_tables_teachers(window, list_of_settings):
     add_teacher(list_of_settings[0], list_of_settings[1], list_of_settings[2], list_of_settings[3], list_of_settings[4])
     #--------------------------------------------
 
-    #-------------refresh the payment page--------------
-    new_page = window.teachers_page()
+    #-------------refresh the teachers page--------------
+    new_page = window.teachers_page(returning_teachers_table())
     window.stacked_widget.removeWidget(window.stacked_widget.widget(2))
     window.stacked_widget.insertWidget(2, new_page)
     window.stacked_widget.setCurrentIndex(2)
@@ -299,8 +299,8 @@ def add_row_in_tables_classes(window, list_of_settings):
 
     #--------------------------------------------
 
-    #-------------refresh the payment page--------------
-    new_page = window.courses_page()
+    #-------------refresh the classes page--------------
+    new_page = window.courses_page(returning_classes_table())
     window.stacked_widget.removeWidget(window.stacked_widget.widget(3))
     window.stacked_widget.insertWidget(3, new_page)
     window.stacked_widget.setCurrentIndex(3)
