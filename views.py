@@ -201,7 +201,7 @@ class MainPage(QWidget):
 
 
 
-    def all_teachers_window(self, content= returning_teachers_table()):
+    def all_teachers_window(self):
         
         self.dialog = QDialog(self)
         self.dialog.setWindowTitle("قائمة الأساتذة")
@@ -221,7 +221,7 @@ class MainPage(QWidget):
         scroll_widget = QWidget()
         scroll_layout = QVBoxLayout(scroll_widget)
 
-        for teacher_information in content:
+        for teacher_information in returning_teachers_table():
             
             teacher_name = teacher_information[1]
             teacher_profession = teacher_information[3]
