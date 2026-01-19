@@ -240,7 +240,7 @@ class MainPage(QWidget):
         self.dialog.exec()
 
 
-    def all_students_window(self, content= returning_students_table()):
+    def all_students_window(self):
         self.dialog = QDialog(self)
         self.dialog.setWindowTitle("قائمة التلاميذ")
         self.dialog.setGeometry(50, 50, 700, 450)
@@ -261,7 +261,7 @@ class MainPage(QWidget):
         scroll_widget = QWidget()
         scroll_layout = QVBoxLayout(scroll_widget)
 
-        for student_information in content:
+        for student_information in returning_students_table():
             student_name = student_information[1]
             student_profession = student_information[4]
             scroll_layout.addWidget(self.payment_card_maker(student_name, student_profession, 'إختر', lambda _, sid=student_information[0]: add_student_id_changer(sid)))
@@ -280,7 +280,7 @@ class MainPage(QWidget):
 
 
 
-    def all_classes_window(self, content= returning_classes_table()):
+    def all_classes_window(self):
         self.dialog = QDialog(self)
         self.dialog.setWindowTitle("قائمة التلاميذ")
         self.dialog.setGeometry(50, 50, 600, 450)
@@ -301,7 +301,7 @@ class MainPage(QWidget):
         scroll_widget = QWidget()
         scroll_layout = QVBoxLayout(scroll_widget)
 
-        for classe_information in content:
+        for classe_information in returning_classes_table():
             teacher_name = classe_information[1]
             classe_material = classe_information[2]
             classe_time = classe_information[3]
